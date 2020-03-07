@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OnurMihyaz</name>
+    </assembly>
+    <members>
+        <member name="M:OnurMihyaz.MihyazDelay.DelayedLoop(System.Single,System.Action,System.Boolean)">
+            <summary>
+            Creates a delay with specific time and action with loop.
+            </summary>
+        </member>
+        <member name="M:OnurMihyaz.MihyazDelay.Delay(System.Single,System.Action)">
+            <summary>
+            Creates a delay with specific time.
+            </summary>
+        </member>
+        <member name="M:OnurMihyaz.MihyazDelay.Delay(System.Single)">
+            <summary>
+            Creates a delay with specific time.
+            </summary>
+        </member>
+        <member name="M:OnurMihyaz.MihyazDelay.WaitUntilThis(System.Func{System.Boolean})">
+            <summary>
+            Suspends the execution with specified boolean function until the eveluates true.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
