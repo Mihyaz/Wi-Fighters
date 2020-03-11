@@ -45,26 +45,22 @@ public class StateSystem : MonoBehaviour, IState, IEvent
         GetComponent<CircleCollider2D>().enabled = false;
         StartCoroutine(MihyazDelay.Delay(3, () => OnPlayerRespawn.Invoke()));
     }
-
     public void Respawn()
     {
         ResetHealth();
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<CircleCollider2D>().enabled = true;
     }
-
     public void Kill()
     {
         Score++;
     }
-
     public void ResetState()
     {
         Score = 0;
         Health = 100;
         Death = 0;
     }
-
     public void Dissolve()
     {
         float fade = 1f;

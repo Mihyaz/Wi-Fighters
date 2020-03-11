@@ -29,9 +29,7 @@ public class PlayerUI : UI
             HealthBar.fillAmount -= _health;
         }
     }
-
     private int _ammo;
-
     public int Clip;
     public int Ammo
     {
@@ -67,10 +65,4 @@ public class PlayerUI : UI
         Clip = clip;
         Ammo = ammo;
     }
-
-    public void UpdateKillFeed()
-    {
-
-    }
-
 }

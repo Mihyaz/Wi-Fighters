@@ -52,18 +52,18 @@ public class KillFeed : ITimer
     public TextMeshProUGUI Text;
     public GameObject[] Icon;
     public static int FunctionCounter = 0;
-    private bool finished = false;
+    private bool _finished = false;
     public float TimeInSeconds { get; set; }
     public bool Countdown()
     {
         if (TimeInSeconds > 0)
         {
             TimeInSeconds -= Time.deltaTime;
-            return finished;
+            return _finished;
         }
         else
         {
-            return !finished;
+            return !_finished;
         }
     }
 

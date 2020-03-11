@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         @Event = GetComponent<IEvent>();
         CommandManager = GetComponent<ICommand>();
 
-        Gun = PickGunClass(1);
+        Gun = PickGunClass(0);
         @Event.OnPlayerRespawn += () =>
         {
             Gun.ResetAmmo();
