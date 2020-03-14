@@ -13,5 +13,8 @@ public static class MyCallBack
         return t;
     }
 
-
+    public static void OnCompletedVoid<T>(this T t, Action action)
+    {
+        action();
+    }
 }

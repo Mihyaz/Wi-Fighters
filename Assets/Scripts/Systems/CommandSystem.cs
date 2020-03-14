@@ -68,10 +68,7 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public void AssignName(string name)
     {
-        if(!isAssigned)
-        {
-            GetComponent<Player>().Name = name;
-            isAssigned = true;
-        }
+        GetComponent<Player>().Name = name;
+        isAssigned = true;
     }
 }

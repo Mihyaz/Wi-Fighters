@@ -5,7 +5,7 @@ using Zenject;
 using DG.Tweening;
 using OnurMihyaz;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(PlayerSystem))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
 
@@ -53,17 +53,17 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        _rigidBody = GetComponent<Rigidbody2D>();
-        _transform = GetComponent<Transform>();
-        _animator = GetComponent<Animator>();
+        _rigidBody =      GetComponent<Rigidbody2D>();
+        _transform =      GetComponent<Transform>();
+        _animator =       GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        UI = GetComponentInChildren<PlayerUI>();
-        Attack = GetComponent<IAttack>();
-        State = GetComponent<IState>();
-        @Event = GetComponent<IEvent>();
-        CommandManager = GetComponent<ICommand>();
+        UI =              GetComponentInChildren<PlayerUI>();
+        Attack =          GetComponent<IAttack>();
+        State =           GetComponent<IState>();
+        @Event =          GetComponent<IEvent>();
+        CommandManager =  GetComponent<ICommand>();
 
-        Gun = PickGunClass(0);
+        Gun = PickGunClass(_choice);
         @Event.OnPlayerRespawn += () =>
         {
             Gun.ResetAmmo();
@@ -76,6 +76,7 @@ public class Player : MonoBehaviour
             UI.SetUI();
             Enemy.State.Score++;
             Enemy.UI.ScoreText.text = Enemy.State.Score.ToString();
+            Debug.Log(Enemy.Name + " " + Name);
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
         GameManager.Instance.OnGameFinish += () => ResetPlayer();
@@ -145,6 +146,7 @@ public class Player : MonoBehaviour
             {
                 Bullet bullet = Instantiate(_bullet, FirePoint.position, FirePoint.rotation);
                 bullet.Rigidbody.velocity = Gun.Fire(bullet, transform);
+                bullet.Init(Gun.Damage, this);
             }
 
         }
@@ -187,6 +189,13 @@ public class Player : MonoBehaviour
             return Gun;
         }
         else if (choice == 1)
+        {
+            Gun Gun = new Handgun();
+            UI.Init(Gun.Ammo, Gun.ClipSize);
+            _bullet.Init(Gun.Damage, this);
+            return Gun;
+        }
+        else if (choice == 2)
         {
             Gun Gun = new Shotgun();
             UI.Init(Gun.Ammo, Gun.ClipSize);

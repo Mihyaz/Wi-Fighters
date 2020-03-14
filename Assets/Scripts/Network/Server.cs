@@ -30,9 +30,9 @@ public class Server : MonoBehaviour
     private TcpClient connectedTcpClient;
     #endregion
 
-    private IPAddress _myIpAddress;
+    private static IPAddress ___IPv4___;
 
-    public static int counter;
+    public static int ConnectedClient;
 
     public Player Player_1;
     public Player Player_2;
@@ -49,6 +49,8 @@ public class Server : MonoBehaviour
     }
     private void Update()
     {
+        //if(ConnectedClient == 4)
+
         if (Player_1.IsConnected)
             Player_1.CommandManager.Executer(Player_1.Command);
 
@@ -75,7 +77,7 @@ public class Server : MonoBehaviour
             {
                 connectedTcpClient = tcpListener.AcceptTcpClient();
                 ThreadPool.QueueUserWorkItem(ThreadProcAsync,connectedTcpClient);
-                Debug.Log("Client: " + (counter + 1));
+                Debug.Log("Client: " + (ConnectedClient + 1));
             }
         }
         catch (SocketException socketException)
@@ -87,12 +89,11 @@ public class Server : MonoBehaviour
     private void ThreadProcAsync(object obj)
     {
         var connectedTcpClient = (TcpClient)obj;
-        counter++;
-        PlayerProfile player = new PlayerProfile("Player" + counter);
+        ConnectedClient++;
+        PlayerProfile player = new PlayerProfile("Player" + ConnectedClient);
         // Get a stream object for reading 
         if (player.Name == "Player1")
         {
-            Player_1.Name = player.Name;
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 	
@@ -105,7 +106,6 @@ public class Server : MonoBehaviour
         }
         if (player.Name == "Player2")
         {
-            Player_2.Name = player.Name;
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary.
@@ -118,7 +118,6 @@ public class Server : MonoBehaviour
         }
         if (player.Name == "Player3")
         {
-            Player_3.Name = player.Name;
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 		
@@ -132,7 +131,6 @@ public class Server : MonoBehaviour
         }
         if (player.Name == "Player4")
         {
-            Player_4.Name = player.Name;
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 		
@@ -175,6 +173,15 @@ public class Server : MonoBehaviour
         {
             Debug.Log("Socket exception: " + socketException);
         }
+    }
+
+    public static string GetIpAdress()
+    {
+        string strHostName = Dns.GetHostName();
+        IPHostEntry ipEntry = Dns.GetHostEntry(strHostName);
+        IPAddress[] addr = ipEntry.AddressList;
+        ___IPv4___ = addr[1];
+        return ___IPv4___.MapToIPv4().ToString();
     }
 
 }

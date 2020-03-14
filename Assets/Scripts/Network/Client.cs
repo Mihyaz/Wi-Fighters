@@ -53,7 +53,7 @@ public class Client : MonoBehaviour
         {
             clientReceiveThread = new Thread(new ThreadStart(ListenForData))
             {
-                //IsBackground = true
+                IsBackground = true
             };
             clientReceiveThread.Start();
         }
@@ -70,7 +70,7 @@ public class Client : MonoBehaviour
         try
         {
             //socketConnection = new TcpClient("192.168." + IPText[0] + "." + IPText[1], 8000);
-            socketConnection = new TcpClient("192.168.84.11", 8000);
+            socketConnection = new TcpClient("192.168.1.10", 8000);
             Byte[] bytes = new Byte[1024];
             while (true)
             {

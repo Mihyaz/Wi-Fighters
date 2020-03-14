@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour, ITimer
     public event GameEvents OnGameStart;
 
     private IEnumerator _gameTimeCo;
+    private IEnumerator _clientsCo;
     public float TimeInSeconds { get; set; }
     private void Awake()
     {
@@ -29,9 +30,16 @@ public class GameManager : MonoBehaviour, ITimer
     private void Start()
     {
         _gameTimeCo = MihyazDelay.WaitUntilThis(Countdown);
-        OnGameStart += () => StartCoroutine(_gameTimeCo);
+        _clientsCo = MihyazDelay.WaitUntilThis(CheckIfEverbodyConnected);
+        StartCoroutine(_clientsCo);
+        UI.IPv4Viewer.ViewIPv4(Server.GetIpAdress());
+        UI.IPv4Viewer.StartGlowEyes();
+        OnGameStart += () =>
+        {
+            StartCoroutine(_gameTimeCo);
+            StopCoroutine(_clientsCo);
+        };
         OnGameFinish += () => StopCoroutine(_gameTimeCo);
-        GameStart();
     }
 
     public void GameFinish()
@@ -59,5 +67,20 @@ public class GameManager : MonoBehaviour, ITimer
             GameFinish();
             return true;
         }
+    }
+    public bool CheckIfEverbodyConnected()
+    {
+        if (Server.ConnectedClient == 2)
+        {
+            GameStart();
+            UI.IPv4Viewer.CloseIPv4();
+            return true;
+        }
+        else
+        {
+            UI.IPv4Viewer.RefreshConnectedPlayers(Server.ConnectedClient);
+            return false;
+        }
+            
     }
 }

@@ -20,13 +20,13 @@ public class PlayerUI : UI
         set
         {
             _health = value;
+            HealthBar.fillAmount -= _health;
             if (HealthBar.fillAmount < 0.50f && HealthBar.fillAmount >= 0.25f)
                 HealthBar.color = Color.yellow;
             else if (HealthBar.fillAmount < 0.25f && HealthBar.fillAmount >= 0f)
                 HealthBar.color = Color.red;
             else
                 HealthBar.color = Color.green;
-            HealthBar.fillAmount -= _health;
         }
     }
     private int _ammo;
