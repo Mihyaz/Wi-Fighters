@@ -27,6 +27,7 @@ public abstract class Gun
 
     public abstract Vector2 Fire(Bullet bullet, Transform playerTransform);
     public abstract int ResetAmmo();
+
 }
 
 public class Rifle : Gun

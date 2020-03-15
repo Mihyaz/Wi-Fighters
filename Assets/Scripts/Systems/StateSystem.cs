@@ -29,9 +29,7 @@ public class StateSystem : MonoBehaviour, IState, IEvent
 
     private void Start()
     {
-        Health = 100;
-        OnPlayerDeath += Die;
-        OnPlayerRespawn += Respawn;
+        Init();
     }
     public void ResetHealth()
     {
@@ -55,12 +53,7 @@ public class StateSystem : MonoBehaviour, IState, IEvent
     {
         Score++;
     }
-    public void ResetState()
-    {
-        Score = 0;
-        Health = 100;
-        Death = 0;
-    }
+
     public void Dissolve()
     {
         float fade = 1f;
@@ -77,5 +70,19 @@ public class StateSystem : MonoBehaviour, IState, IEvent
             renderer.material.SetFloat("_Fade", fade);
             return false;
         }));
+    }
+
+    public void Init()
+    {
+        Health = 100;
+        OnPlayerDeath += Die;
+        OnPlayerRespawn += Respawn;
+    }
+
+    public void ResetThis()
+    {
+        Score = 0;
+        Health = 100;
+        Death = 0;
     }
 }

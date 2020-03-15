@@ -47,28 +47,28 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
     private PlayerUI UI;
-
     [SerializeField] private int _choice;
-
-    private void Start()
+    private void Awake()
     {
         _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        _rigidBody =      GetComponent<Rigidbody2D>();
-        _transform =      GetComponent<Transform>();
-        _animator =       GetComponent<Animator>();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _transform = GetComponent<Transform>();
+        _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        UI =              GetComponentInChildren<PlayerUI>();
-        Attack =          GetComponent<IAttack>();
-        State =           GetComponent<IState>();
-        @Event =          GetComponent<IEvent>();
-        CommandManager =  GetComponent<ICommand>();
-
+        UI = GetComponentInChildren<PlayerUI>();
+        Attack = GetComponent<IAttack>();
+        State = GetComponent<IState>();
+        @Event = GetComponent<IEvent>();
+        CommandManager = GetComponent<ICommand>();
+    }
+    private void Start()
+    {
         Gun = PickGunClass(_choice);
         @Event.OnPlayerRespawn += () =>
         {
             Gun.ResetAmmo();
             State.ResetHealth();
-            UI.ResetUI();
+            UI.ResetThis();
             _transform.position = _spawnPointHandler.GetSpawnPoint();
         };
         @Event.OnPlayerDeath += () =>
@@ -76,7 +76,6 @@ public class Player : MonoBehaviour
             UI.SetUI();
             Enemy.State.Score++;
             Enemy.UI.ScoreText.text = Enemy.State.Score.ToString();
-            Debug.Log(Enemy.Name + " " + Name);
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
         GameManager.Instance.OnGameFinish += () => ResetPlayer();
@@ -146,7 +145,6 @@ public class Player : MonoBehaviour
             {
                 Bullet bullet = Instantiate(_bullet, FirePoint.position, FirePoint.rotation);
                 bullet.Rigidbody.velocity = Gun.Fire(bullet, transform);
-                bullet.Init(Gun.Damage, this);
             }
 
         }
@@ -181,36 +179,34 @@ public class Player : MonoBehaviour
 
     private Gun PickGunClass(int choice)
     {
-        if (choice == 0)
+        Gun Gun;
+
+        switch (choice)
         {
-            Gun Gun = new Rifle();
-            UI.Init(Gun.Ammo, Gun.ClipSize);
-            _bullet.Init(Gun.Damage, this);
-            return Gun;
+            case 0:
+                Gun = new Rifle();
+                break;
+            case 1:
+                Gun = new Handgun();
+                break;
+            case 2:
+                Gun = new Shotgun();
+                break;
+            default:
+                Gun = new Rifle();
+                break;
         }
-        else if (choice == 1)
-        {
-            Gun Gun = new Handgun();
-            UI.Init(Gun.Ammo, Gun.ClipSize);
-            _bullet.Init(Gun.Damage, this);
-            return Gun;
-        }
-        else if (choice == 2)
-        {
-            Gun Gun = new Shotgun();
-            UI.Init(Gun.Ammo, Gun.ClipSize);
-            _bullet.Init(Gun.Damage, this);
-            return Gun;
-        }
-        else
-            return new Rifle();
+
+        UI.Init(Gun.Ammo, Gun.ClipSize);
+        _bullet.Init(Gun.Damage, this);
+        return Gun;
     }
 
     public void ResetPlayer()
     {
         Gun.ResetAmmo();
-        State.ResetState();
-        UI.ResetUI();
+        State.ResetThis();
+        UI.ResetThis();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

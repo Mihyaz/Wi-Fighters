@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IState
+public interface IState : IComposable
 {
     int Health { get; set; }
     int Score { get; set; }
@@ -12,5 +12,4 @@ public interface IState
     void Respawn();
     void Kill();
     void Dissolve();
-    void ResetState();
 }

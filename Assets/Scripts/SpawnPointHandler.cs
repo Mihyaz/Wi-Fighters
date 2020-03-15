@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class SpawnPointHandler : MonoBehaviour
+public class SpawnPointHandler : MonoBehaviour, IComposable
 {
     public Stack<Vector3> SpawnPoints = new Stack<Vector3>();
     private System.Random _random = new System.Random();
@@ -38,5 +38,10 @@ public class SpawnPointHandler : MonoBehaviour
         foreach (var value in values.OrderBy(x => _random.Next()))
             stack.Push(value);
         return stack;
+    }
+
+    public void ResetThis()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -10,10 +10,19 @@ using UnityEngine.UI;
 public class GameUI : UI
 {
     public List<TextMeshProUGUI> GameTime;
+
     public List<KillFeed> KillFeeds;
     public IPv4Viewer IPv4Viewer;
-
     private int FunctionCounter = 0;
+
+    private void Awake()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            KillFeeds[i].Init();
+        }
+        IPv4Viewer.Init();
+    }
 
     public void RefreshKillFeed(string PlayerKill, string PlayerDie)
     {
@@ -41,13 +50,22 @@ public class GameUI : UI
     }
 }
 [System.Serializable]
-public class KillFeed : ITimer
+public class KillFeed : ITimer, IComposable
 {
+    public float TimeInSeconds { get; set; }
     public TextMeshProUGUI[] Text;
     public GameObject[] Icon;
     public int FunctionCounter = 0;
     private bool _finished = false;
-    public float TimeInSeconds { get; set; }
+
+    public void Init()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            Text[i] = GameObject.Find("KillFeedText_" + (i + 1)).GetComponent<TextMeshProUGUI>();
+            Icon[i] = GameObject.Find("KillFeedIcon_" + (i + 1));
+        }
+    }
     public bool Countdown()
     {
         if (TimeInSeconds > 0)
@@ -60,19 +78,35 @@ public class KillFeed : ITimer
             return !_finished;
         }
     }
+
+    public void ResetThis()
+    {
+        throw new NotImplementedException();
+    }
     //This class has created in March 4th in Chocolabs with Ruby <3//
 }
-
 [System.Serializable]
-public class IPv4Viewer
+public class IPv4Viewer : IComposable
 {
-    [Header("IPv4 List")]
-    public TextMeshProUGUI[] IPv4;
+    public TextMeshProUGUI[] IPv4 = new TextMeshProUGUI[2];
     public TextMeshProUGUI ConnectedPlayers;
     public Text WaitingForPlayers;
-    public GameObject Background;
+    public GameObject AdressScreen;
     public GameObject Icon;
     public Image Eyes;
+
+    public void Init()
+    {
+        for (int i = 0; i < IPv4.Length; i++)
+        {
+            IPv4[i] = GameObject.Find("IP_" + (i + 1)).GetComponent<TextMeshProUGUI>();
+        }
+        ConnectedPlayers  = GameObject.Find("ConnectedPlayers").GetComponent<TextMeshProUGUI>();
+        WaitingForPlayers = GameObject.Find("Dots").GetComponent<Text>();
+        AdressScreen      = GameObject.Find("IPAdressScreen");
+        Icon = GameObject.Find("GameIcon");
+        Eyes = GameObject.Find("Eyes").GetComponent<Image>();
+    }
 
     public void StartGlowEyes()
     {
@@ -105,7 +139,12 @@ public class IPv4Viewer
                 });
             });
         });
-        Background.SetActive(false);
+        AdressScreen.SetActive(false);
+    }
+
+    public void ResetThis()
+    {
+        throw new NotImplementedException();
     }
 }
 

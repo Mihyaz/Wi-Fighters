@@ -9,11 +9,10 @@ public enum CommandTypes
     Stop
 }
 
-public class CommandType : MonoBehaviour
+public class CommandType
 {
     public Dictionary<CommandTypes, string> CommandsDic = new Dictionary<CommandTypes, string>();
-
-    private void Awake()
+    public CommandType()
     {
         CommandsDic.Add(CommandTypes.Move, "Move");
         CommandsDic.Add(CommandTypes.Shoot, "Shoot");

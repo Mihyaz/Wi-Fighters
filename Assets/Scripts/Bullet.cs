@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OnurMihyaz;
 
 public class Bullet : MonoBehaviour
 {
@@ -10,14 +9,9 @@ public class Bullet : MonoBehaviour
 
     public float Damage;
     public Player Player;
-    void Start()
+    void Awake()
     {
         _transform = transform;
-    }
-
-    private void OnDestroy()
-    {
-        //Particle effect
     }
 
     public void Init(float damage, Player player)

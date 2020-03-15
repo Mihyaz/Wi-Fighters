@@ -13,11 +13,10 @@ public class CommandSystem : MonoBehaviour, ICommand
     private string _commandRotation = "";
     private string _commandShooting = "";
     private string _commandReloading = "";
-    private bool isAssigned;
 
-    private void Start()
+    private void Awake()
     {
-        _commandType = FindObjectOfType<CommandType>();
+        _commandType = new CommandType();
         _stringToVector2 = new Converter.StringToVector2();
     }
 
@@ -69,6 +68,5 @@ public class CommandSystem : MonoBehaviour, ICommand
     public void AssignName(string name)
     {
         GetComponent<Player>().Name = name;
-        isAssigned = true;
     }
 }

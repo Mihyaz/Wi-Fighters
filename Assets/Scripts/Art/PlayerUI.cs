@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public class PlayerUI : UI
+public class PlayerUI : UI, IComposable
 {
     public Image HealthBar;
     public DeathDimmer DeathDimmer;
@@ -44,11 +44,10 @@ public class PlayerUI : UI
 
     private void Start()
     {
-        DeathDimmer = GetComponentInChildren<DeathDimmer>(true);
-        HealthBar.fillAmount = 1;
+        Init();
     }
 
-    public void ResetUI()
+    public void ResetThis()
     {
         HealthBar.fillAmount = 1;
         HealthBar.color = Color.green;
@@ -64,5 +63,11 @@ public class PlayerUI : UI
     {
         Clip = clip;
         Ammo = ammo;
+    }
+
+    public void Init()
+    {
+        DeathDimmer = GetComponentInChildren<DeathDimmer>(true);
+        HealthBar.fillAmount = 1;
     }
 }
