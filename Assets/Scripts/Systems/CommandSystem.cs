@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 using Mihyaz;
 
 public class CommandSystem : MonoBehaviour, ICommand

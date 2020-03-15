@@ -6,7 +6,7 @@ using TMPro;
 using System;
 using Zenject;
 
-public class GameManager : MonoBehaviour, ITimer
+public class GameManager : MonoBehaviour, ITimer<float>
 {
     [Inject][HideInInspector]
     public GameUI UI;

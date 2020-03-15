@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SpawnPointHandler : MonoBehaviour, IComposable
 {
-    public Stack<Vector3> SpawnPoints = new Stack<Vector3>();
+    private Stack<Vector3> _spawnPoints = new Stack<Vector3>();
     private System.Random _random = new System.Random();
 
     void Start()
@@ -15,20 +15,20 @@ public class SpawnPointHandler : MonoBehaviour, IComposable
 
     public Vector3 GetSpawnPoint()
     {
-        if(SpawnPoints.Count == 0)
+        if(_spawnPoints.Count == 0)
         {
             Init();
         }
-        return SpawnPoints.Pop();
+        return _spawnPoints.Pop();
     }
 
     public void Init()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            SpawnPoints.Push(GetComponentsInChildren<Transform>()[i].position);
+            _spawnPoints.Push(GetComponentsInChildren<Transform>()[i].position);
         }
-        SpawnPoints = Shuffle(SpawnPoints);
+        _spawnPoints = Shuffle(_spawnPoints);
     }
 
     public Stack<Vector3> Shuffle(Stack<Vector3> stack)

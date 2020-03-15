@@ -51,15 +51,15 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        _rigidBody = GetComponent<Rigidbody2D>();
-        _transform = GetComponent<Transform>();
-        _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         UI = GetComponentInChildren<PlayerUI>();
-        Attack = GetComponent<IAttack>();
-        State = GetComponent<IState>();
-        @Event = GetComponent<IEvent>();
-        CommandManager = GetComponent<ICommand>();
+        _rigidBody      = GetComponent<Rigidbody2D>();
+        _transform      = GetComponent<Transform>();
+        _animator       = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        Attack          = GetComponent<IAttack>();
+        State           = GetComponent<IState>();
+        CommandManager  = GetComponent<ICommand>();
+        @Event          = GetComponent<IEvent>();
     }
     private void Start()
     {

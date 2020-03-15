@@ -10,7 +10,7 @@ public class EnvironmentHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("Bullet"))
         {
             Instantiate(HitParticle, collision.gameObject.transform.position, collision.gameObject.transform.rotation.normalized);
-            Destroy(collision.gameObject);
+            Destroy(collision.gameObject); //Sorry to use "Destroy". Too lazy to implement pooler
         }
     }
 }

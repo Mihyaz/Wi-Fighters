@@ -6,7 +6,7 @@ using DG.Tweening;
 using TMPro;
 using OnurMihyaz;
 
-public class DeathDimmer : MonoBehaviour, ITimer
+public class DeathDimmer : MonoBehaviour, ITimer<float>
 {
     private Image _dimmer;
     private Image _icon;

@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IAttack
+﻿public interface IAttack
 {
     string Shoot();
     string StopShooting();

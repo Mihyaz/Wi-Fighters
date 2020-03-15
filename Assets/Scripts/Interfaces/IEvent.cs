@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public delegate void PlayerDelegate();
+﻿public delegate void PlayerDelegate();
 public interface IEvent
 {
     PlayerDelegate PlayerDelegate { get; set; }

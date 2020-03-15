@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using OnurMihyaz;
@@ -50,13 +49,13 @@ public class GameUI : UI
     }
 }
 [System.Serializable]
-public class KillFeed : ITimer, IComposable
+public class KillFeed : ITimer<float>, IComposable
 {
     public float TimeInSeconds { get; set; }
     public TextMeshProUGUI[] Text;
     public GameObject[] Icon;
     public int FunctionCounter = 0;
-    private bool _finished = false;
+    private readonly bool _finished = false;
 
     public void Init()
     {
