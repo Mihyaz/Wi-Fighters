@@ -14,7 +14,7 @@ public class ClassSelection : MonoBehaviour
         {
             int temp = i; //Delegates use the index as pointer. I had to realloc a new index in order to change i's address.
             _choiceButton[i] = transform.GetChild(i).GetComponent<Button>();
-            _choiceButton[i].onClick.AddListener(delegate { SetChoice(temp); });
+            _choiceButton[i].onClick.AddListener(delegate { InitPlayer(temp); });
         
         }
         _player = gameObject.transform.root.GetComponent<Player>();
@@ -24,11 +24,12 @@ public class ClassSelection : MonoBehaviour
 
     }
 
-    public void SetChoice(int index)
+    public void InitPlayer(int index)
     {
         _player.CharacterClass = (GunClasses)index;
         _player.Gun = _player.PickGunClass((GunClasses)index);
         _player.Animator.runtimeAnimatorController = _runtimeAnimatorController[index];
+        _player.enabled = true;
     }
 }
 

@@ -63,13 +63,10 @@ public class Player : MonoBehaviour, IComposable
     }
     private void Update()
     {
-        if(Gun != null)
-        {
-            Shoot();
-            Reload();
-            Move();
-            Rotate();
-        }
+        Shoot();
+        Reload();
+        Move();
+        Rotate();
     }
 
     private void Rotate()

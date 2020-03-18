@@ -3729,7 +3729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &356935299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3780,6 +3780,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
+  Animator: {fileID: 0}
   FirePoint: {fileID: 1742047725}
   CharacterClass: 0
 --- !u!50 &356935303
@@ -4936,7 +4937,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494943112}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61b84d49a1916d44b8dc59f2cb1d5580, type: 3}
   m_Name: 
@@ -4944,6 +4945,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
+  Animator: {fileID: 0}
   FirePoint: {fileID: 1781988518}
   CharacterClass: 0
 --- !u!95 &494943118
@@ -15705,6 +15707,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
+  Animator: {fileID: 0}
   FirePoint: {fileID: 530031680}
   CharacterClass: 0
 --- !u!50 &1983877079
