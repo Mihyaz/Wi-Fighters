@@ -6,7 +6,7 @@ using DG.Tweening;
 using OnurMihyaz;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IComposable
 {
 
     #region TCP/IP Variables
@@ -14,28 +14,19 @@ public class Player : MonoBehaviour
     public string Command;
     [HideInInspector]
     public bool IsConnected;
-    private string _name;
-    public string Name
-    {
-        get => _name;
-        set
-        {
-            _name = value;
-        }
-    }
-
+    public string Name { get; set; }
     #endregion
 
-    [Inject]
-    private readonly Bullet _bullet;
-    [Inject]
-    private readonly SpawnPointHandler _spawnPointHandler;
-    [HideInInspector]
-    public Player Enemy;
+    [Inject] private readonly Bullet _bullet;
+    [Inject] private readonly SpawnPointHandler _spawnPointHandler;
+
+    [HideInInspector] public Player Enemy;
+    [HideInInspector] public Animator Animator;
 
     public Gun Gun;
     public Transform FirePoint;
 
+    public GunClasses CharacterClass;
     public ICommand CommandManager;
     public IAttack Attack;
     public IState State;
@@ -44,26 +35,14 @@ public class Player : MonoBehaviour
     private GameObject _blood;
     private Rigidbody2D _rigidBody;
     private Transform _transform;
-    private Animator _animator;
     private SpriteRenderer _spriteRenderer;
     private PlayerUI UI;
-    [SerializeField] private int _choice;
     private void Awake()
     {
-        _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        UI = GetComponentInChildren<PlayerUI>();
-        _rigidBody      = GetComponent<Rigidbody2D>();
-        _transform      = GetComponent<Transform>();
-        _animator       = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        Attack          = GetComponent<IAttack>();
-        State           = GetComponent<IState>();
-        CommandManager  = GetComponent<ICommand>();
-        @Event          = GetComponent<IEvent>();
+        Init();
     }
     private void Start()
     {
-        Gun = PickGunClass(_choice);
         @Event.OnPlayerRespawn += () =>
         {
             Gun.ResetAmmo();
@@ -78,16 +57,19 @@ public class Player : MonoBehaviour
             Enemy.UI.ScoreText.text = Enemy.State.Score.ToString();
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
-        GameManager.Instance.OnGameFinish += () => ResetPlayer();
+        GameManager.Instance.OnGameFinish += () => ResetThis();
         _transform.position = _spawnPointHandler.GetSpawnPoint();
 
     }
     private void Update()
     {
-        Shoot();
-        Reload();
-        Move();
-        Rotate();
+        if(Gun != null)
+        {
+            Shoot();
+            Reload();
+            Move();
+            Rotate();
+        }
     }
 
     private void Rotate()
@@ -105,7 +87,7 @@ public class Player : MonoBehaviour
             {                                                                      // otherwise it rotates wrong direction 
                 homeRotation = Vector3.zero;
             }
-            _transform.localEulerAngles = Vector3.Slerp(currentRotation, homeRotation, Time.deltaTime * -2);
+            _transform.localEulerAngles = Vector3.Slerp(currentRotation, homeRotation, Time.deltaTime * 0.5f);//Maybe change this
         }
         else
         {
@@ -119,10 +101,10 @@ public class Player : MonoBehaviour
         _rigidBody.velocity = CommandManager.GetMovement();
 
         if (_rigidBody.velocity.magnitude > 0)
-            _animator.SetBool("isRunning", true);
+            Animator.SetBool("isRunning", true);
 
         else
-            _animator.SetBool("isRunning", false);
+            Animator.SetBool("isRunning", false);
     }
 
     private void Shoot()
@@ -139,7 +121,7 @@ public class Player : MonoBehaviour
             Gun.NextFire = Time.time + Gun.FireRate;
 
             UI.Ammo = --Gun.Ammo;
-            _animator.SetBool("isShooting", true);
+            Animator.SetBool("isShooting", true);
 
             for (int i = 0; i < Gun.SpreadCount; i++)
             {
@@ -150,7 +132,7 @@ public class Player : MonoBehaviour
         }
         if (!CommandManager.Shoot())
         {
-            _animator.SetBool("isShooting", false);
+            Animator.SetBool("isShooting", false);
         }
     }
 
@@ -158,7 +140,7 @@ public class Player : MonoBehaviour
     {
         if (CommandManager.Reload() && Gun.Ammo != Gun.ClipSize)
         {
-            _animator.SetBool("isReloading", true);
+            Animator.SetBool("isReloading", true);
             Attack.isReloading = true;
         }
     }
@@ -166,31 +148,33 @@ public class Player : MonoBehaviour
     {
         if (!Attack.isReloading && Gun.Ammo != Gun.ClipSize)
         {
-            _animator.SetBool("isReloading", true);
+            Animator.SetBool("isReloading", true);
             Attack.isReloading = true;
         }
     }
-    private void StopReloading()
+    public void StopReloading()
     {
-        _animator.SetBool("isReloading", false);
+        Animator.SetBool("isReloading", false);
         UI.Ammo = Gun.ResetAmmo();
         Attack.isReloading = false;
     }
 
-    private Gun PickGunClass(int choice)
+    public Gun PickGunClass(GunClasses choice)
     {
         Gun Gun;
-
         switch (choice)
         {
-            case 0:
+            case GunClasses.Rifle:
                 Gun = new Rifle();
                 break;
-            case 1:
+            case GunClasses.Shotgun:
                 Gun = new Handgun();
                 break;
-            case 2:
+            case GunClasses.Handgun:
                 Gun = new Shotgun();
+                break;
+            case GunClasses.Laser:
+                Gun = new Laser();
                 break;
             default:
                 Gun = new Rifle();
@@ -201,14 +185,6 @@ public class Player : MonoBehaviour
         _bullet.Init(Gun.Damage, this);
         return Gun;
     }
-
-    public void ResetPlayer()
-    {
-        Gun.ResetAmmo();
-        State.ResetThis();
-        UI.ResetThis();
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -225,5 +201,26 @@ public class Player : MonoBehaviour
             UI.Health = (Enemy.Gun.Damage / 100);
             Destroy(collision.gameObject);
         }
+    }
+
+    public void Init()
+    {
+        _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
+        UI = GetComponentInChildren<PlayerUI>();
+        _rigidBody = GetComponent<Rigidbody2D>();
+        _transform = GetComponent<Transform>();
+        Animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        Attack = GetComponent<IAttack>();
+        State = GetComponent<IState>();
+        CommandManager = GetComponent<ICommand>();
+        @Event = GetComponent<IEvent>();
+    }
+
+    public void ResetThis()
+    {
+        Gun.ResetAmmo();
+        State.ResetThis();
+        UI.ResetThis();
     }
 }

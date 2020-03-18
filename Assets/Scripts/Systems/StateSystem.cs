@@ -27,7 +27,7 @@ public class StateSystem : MonoBehaviour, IState, IEvent
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         Init();
     }

@@ -1,0 +1,3 @@
+﻿[*.cs]
+
+# IDE0051: Kullanılmayan özel üyeleri kaldır

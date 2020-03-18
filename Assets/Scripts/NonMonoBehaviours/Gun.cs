@@ -3,7 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
-
+public enum GunClasses
+{
+    Rifle,
+    Shotgun,
+    Handgun,
+    Laser
+}
 public abstract class Gun
 {
     public float FireRate;
@@ -53,29 +59,7 @@ public class Rifle : Gun
         return playerTransform.up * Speed;
     }
 }
-public class Handgun : Gun
-{
-    public Handgun(
-    float fireRate = 0.75f,
-    float damage = 35,
-    float nextFire = 0.0f,
-    float speed = 100f,
-    int clipSize = 6,
-    int ammo = 6,
-    int spreadCount = 1) :
-    base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
-    {
 
-    }
-    public override int ResetAmmo()
-    {
-        return Ammo = ClipSize;
-    }
-    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
-    {
-        return playerTransform.up * Speed;
-    }
-}
 public class Shotgun : Gun
 {
     float[] spreadAngle = new float[5];
@@ -112,5 +96,51 @@ public class Shotgun : Gun
         float rotateAngle = (spreadAngle[i]) + (Mathf.Atan2(y, x) * Mathf.Rad2Deg);
         i--;
         return new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle * Mathf.Deg2Rad)).normalized * Speed;
+    }
+}
+public class Handgun : Gun
+{
+    public Handgun(
+    float fireRate = 0.75f,
+    float damage = 35,
+    float nextFire = 0.0f,
+    float speed = 100f,
+    int clipSize = 6,
+    int ammo = 6,
+    int spreadCount = 1) :
+    base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
+    {
+
+    }
+    public override int ResetAmmo()
+    {
+        return Ammo = ClipSize;
+    }
+    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+    {
+        return playerTransform.up * Speed;
+    }
+}
+public class Laser : Gun
+{
+    public Laser(
+    float fireRate = 2.5f,
+    float damage = 100,
+    float nextFire = 0.0f,
+    float speed = 200f,
+    int clipSize = 1,
+    int ammo = 1,
+    int spreadCount = 1) :
+    base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
+    {
+
+    }
+    public override int ResetAmmo()
+    {
+        return Ammo = ClipSize;
+    }
+    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+    {
+        return playerTransform.up * Speed;
     }
 }
