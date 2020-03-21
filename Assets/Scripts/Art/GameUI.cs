@@ -12,7 +12,7 @@ public class GameUI : UI
 
     public List<KillFeed> KillFeeds;
     public IPv4Viewer IPv4Viewer;
-    private int FunctionCounter = 0;
+    private int FunctionCounter;
 
     private void Awake()
     {
@@ -31,8 +31,10 @@ public class GameUI : UI
         }
         for (int i = 0; i < KillFeeds.Count; i++)
         {
-            KillFeeds[i].Text[FunctionCounter].text = PlayerKill + "      " + PlayerDie;
-            KillFeeds[i].Text[FunctionCounter].gameObject.SetActive(true);
+            KillFeeds[i].KillerText[FunctionCounter].text = PlayerKill;
+            KillFeeds[i].DeathText[FunctionCounter].text = PlayerDie;
+            KillFeeds[i].KillerText[FunctionCounter].gameObject.SetActive(true);
+            KillFeeds[i].DeathText[FunctionCounter].gameObject.SetActive(true);
             KillFeeds[i].Icon[FunctionCounter].SetActive(true);
         }
         StartCoroutine(MihyazDelay.Delay(5f, () =>
@@ -40,7 +42,8 @@ public class GameUI : UI
             int ct = FunctionCounter;
             for (int j = 0; j < KillFeeds.Count; j++)
             {
-                KillFeeds[j].Text[ct - 1].gameObject.SetActive(false);
+                KillFeeds[j].KillerText[ct - 1].gameObject.SetActive(false);
+                KillFeeds[j].DeathText[ct - 1].gameObject.SetActive(false);
                 KillFeeds[j].Icon[ct - 1].SetActive(false);
             }
             FunctionCounter--;
@@ -52,16 +55,18 @@ public class GameUI : UI
 public class KillFeed : ITimer<float>, IComposable
 {
     public float TimeInSeconds { get; set; }
-    public TextMeshProUGUI[] Text;
+    public TextMeshProUGUI[] KillerText;
+    public TextMeshProUGUI[] DeathText;
     public GameObject[] Icon;
-    public int FunctionCounter = 0;
-    private readonly bool _finished = false;
+    private bool _finished;
 
     public void Init()
     {
+        string KillFeedText_ = "KillFeedText_";
         for (int i = 0; i < 3; i++)
         {
-            Text[i] = GameObject.Find("KillFeedText_" + (i + 1)).GetComponent<TextMeshProUGUI>();
+            KillerText[i] = GameObject.Find(KillFeedText_ + (i + 1)).GetComponent<TextMeshProUGUI>();
+            DeathText[i] = GameObject.Find(KillFeedText_ + (i + 1) + "(Death)").GetComponent<TextMeshProUGUI>();
             Icon[i] = GameObject.Find("KillFeedIcon_" + (i + 1));
         }
     }

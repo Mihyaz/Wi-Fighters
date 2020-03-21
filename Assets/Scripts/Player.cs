@@ -43,20 +43,14 @@ public class Player : MonoBehaviour, IComposable
     }
     private void Start()
     {
-        @Event.OnPlayerRespawn += () =>
-        {
-            Gun.ResetAmmo();
-            State.ResetHealth();
-            UI.ResetThis();
-            _transform.position = _spawnPointHandler.GetSpawnPoint();
-        };
         @Event.OnPlayerDeath += () =>
         {
             UI.SetUI();
             Enemy.State.Score++;
-            Enemy.UI.ScoreText.text = Enemy.State.Score.ToString();
+            Enemy.UI.Score.text = Enemy.State.Score.ToString();
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
+        @Event.OnPlayerRespawn += () => ResetThis();
         GameManager.Instance.OnGameFinish += () => ResetThis();
         _transform.position = _spawnPointHandler.GetSpawnPoint();
 
@@ -68,7 +62,32 @@ public class Player : MonoBehaviour, IComposable
         Move();
         Rotate();
     }
+    public Gun PickGunClass(GunClasses choice)
+    {
+        Gun Gun;
+        switch (choice)
+        {
+            case GunClasses.Rifle:
+                Gun = new Rifle();
+                break;
+            case GunClasses.Shotgun:
+                Gun = new Handgun();
+                break;
+            case GunClasses.Handgun:
+                Gun = new Shotgun();
+                break;
+            case GunClasses.Laser:
+                Gun = new Laser();
+                break;
+            default:
+                Gun = new Rifle();
+                break;
+        }
 
+        UI.Init(Gun.Ammo, Gun.ClipSize);
+        _bullet.Init(Gun.Damage, this);
+        return Gun;
+    }
     private void Rotate()
     {
         if (CommandManager.GetRotation().x == 0f && CommandManager.GetRotation().y == 0f)
@@ -117,7 +136,7 @@ public class Player : MonoBehaviour, IComposable
         {
             Gun.NextFire = Time.time + Gun.FireRate;
 
-            UI.Ammo = --Gun.Ammo;
+            UI.CurrentAmmo = --Gun.Ammo;
             Animator.SetBool("isShooting", true);
 
             for (int i = 0; i < Gun.SpreadCount; i++)
@@ -152,35 +171,8 @@ public class Player : MonoBehaviour, IComposable
     public void StopReloading()
     {
         Animator.SetBool("isReloading", false);
-        UI.Ammo = Gun.ResetAmmo();
+        UI.CurrentAmmo = Gun.ResetAmmo();
         Attack.isReloading = false;
-    }
-
-    public Gun PickGunClass(GunClasses choice)
-    {
-        Gun Gun;
-        switch (choice)
-        {
-            case GunClasses.Rifle:
-                Gun = new Rifle();
-                break;
-            case GunClasses.Shotgun:
-                Gun = new Handgun();
-                break;
-            case GunClasses.Handgun:
-                Gun = new Shotgun();
-                break;
-            case GunClasses.Laser:
-                Gun = new Laser();
-                break;
-            default:
-                Gun = new Rifle();
-                break;
-        }
-
-        UI.Init(Gun.Ammo, Gun.ClipSize);
-        _bullet.Init(Gun.Damage, this);
-        return Gun;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -219,5 +211,6 @@ public class Player : MonoBehaviour, IComposable
         Gun.ResetAmmo();
         State.ResetThis();
         UI.ResetThis();
+        _transform.position = _spawnPointHandler.GetSpawnPoint();
     }
 }

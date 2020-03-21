@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 public enum CommandTypes
 {
     Move,
@@ -7,7 +6,6 @@ public enum CommandTypes
     Reload,
     Stop
 }
-
 public class CommandType
 {
     public Dictionary<CommandTypes, string> CommandsDic = new Dictionary<CommandTypes, string>();
@@ -18,5 +16,4 @@ public class CommandType
         CommandsDic.Add(CommandTypes.Reload, "Reload");
         CommandsDic.Add(CommandTypes.Stop, "Stop");
     }
-
 }

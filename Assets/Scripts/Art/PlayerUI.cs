@@ -9,9 +9,9 @@ public class PlayerUI : UI, IComposable
 {
     public Image HealthBar;
     public DeathDimmer DeathDimmer;
-    public TextMeshProUGUI AmmoText;
-    public TextMeshProUGUI ScoreText;
-    public TextMeshProUGUI KillFeedText;
+    public TextMeshProUGUI Ammo;
+    public TextMeshProUGUI Score;
+    public TextMeshProUGUI KillFeed;
 
     private float _health;
     public float Health
@@ -29,15 +29,15 @@ public class PlayerUI : UI, IComposable
                 HealthBar.color = Color.green;
         }
     }
-    private int _ammo;
+    private int _currentAmmo;
     public int Clip;
-    public int Ammo
+    public int CurrentAmmo
     {
-        get => _ammo;
+        get => _currentAmmo;
         set
         {
-            _ammo = value;
-            AmmoText.text = _ammo.ToString() + "/" + Clip.ToString();
+            _currentAmmo = value;
+            Ammo.text = _currentAmmo.ToString() + "/" + Clip.ToString();
         }
     }
 
@@ -62,7 +62,7 @@ public class PlayerUI : UI, IComposable
     public void Init(int ammo, int clip)
     {
         Clip = clip;
-        Ammo = ammo;
+        CurrentAmmo = ammo;
     }
 
     public void Init()

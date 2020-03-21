@@ -35,7 +35,6 @@ public class StateSystem : MonoBehaviour, IState, IEvent
     {
         Health = 100;
     }
-
     public void Die()
     {
         Death++;
@@ -53,7 +52,6 @@ public class StateSystem : MonoBehaviour, IState, IEvent
     {
         Score++;
     }
-
     public void Dissolve()
     {
         float fade = 1f;
