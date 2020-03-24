@@ -8,27 +8,22 @@ using UnityEngine.UI;
 
 public class GameUI : UI
 {
-    public List<TextMeshProUGUI> GameTime;
+    private int FunctionCounter;
 
+    public List<TextMeshProUGUI> GameTime;
     public List<KillFeed> KillFeeds;
     public IPv4Viewer IPv4Viewer;
-    private int FunctionCounter;
 
     private void Awake()
     {
-        for (int i = 0; i < 2; i++)
-        {
-            KillFeeds[i].Init();
-        }
         IPv4Viewer.Init();
     }
 
     public void RefreshKillFeed(string PlayerKill, string PlayerDie)
     {
         if (FunctionCounter == 3)
-        {
             FunctionCounter = 0;
-        }
+
         for (int i = 0; i < KillFeeds.Count; i++)
         {
             KillFeeds[i].KillerText[FunctionCounter].text = PlayerKill;
@@ -40,59 +35,46 @@ public class GameUI : UI
         StartCoroutine(MihyazDelay.Delay(5f, () =>
         {
             int ct = FunctionCounter;
-            for (int j = 0; j < KillFeeds.Count; j++)
+            for (int i = 0; i < KillFeeds.Count; i++)
             {
-                KillFeeds[j].KillerText[ct - 1].gameObject.SetActive(false);
-                KillFeeds[j].DeathText[ct - 1].gameObject.SetActive(false);
-                KillFeeds[j].Icon[ct - 1].SetActive(false);
+                KillFeeds[i].KillerText[ct - 1].gameObject.SetActive(false);
+                KillFeeds[i].DeathText[ct - 1].gameObject.SetActive(false);
+                KillFeeds[i].Icon[ct - 1].SetActive(false);
             }
             FunctionCounter--;
         }));
         FunctionCounter++;
     }
 }
-[System.Serializable]
-public class KillFeed : ITimer<float>, IComposable
+
+[Serializable]
+public class KillFeed : ITimer<float>
 {
     public float TimeInSeconds { get; set; }
-    public TextMeshProUGUI[] KillerText;
-    public TextMeshProUGUI[] DeathText;
-    public GameObject[] Icon;
-    private bool _finished;
+    public List<TextMeshProUGUI> KillerText = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> DeathText = new List<TextMeshProUGUI>();
+    public List<GameObject> Icon = new List<GameObject>();
 
-    public void Init()
-    {
-        string KillFeedText_ = "KillFeedText_";
-        for (int i = 0; i < 3; i++)
-        {
-            KillerText[i] = GameObject.Find(KillFeedText_ + (i + 1)).GetComponent<TextMeshProUGUI>();
-            DeathText[i] = GameObject.Find(KillFeedText_ + (i + 1) + "(Death)").GetComponent<TextMeshProUGUI>();
-            Icon[i] = GameObject.Find("KillFeedIcon_" + (i + 1));
-        }
-    }
     public bool Countdown()
     {
         if (TimeInSeconds > 0)
         {
             TimeInSeconds -= Time.deltaTime;
-            return _finished;
+            return false;
         }
         else
         {
-            return !_finished;
+            return true;
         }
     }
 
-    public void ResetThis()
-    {
-        throw new NotImplementedException();
-    }
     //This class has created in March 4th in Chocolabs with Ruby <3//
 }
-[System.Serializable]
+
+[Serializable]
 public class IPv4Viewer : IComposable
 {
-    public TextMeshProUGUI[] IPv4 = new TextMeshProUGUI[2];
+    private List<TextMeshProUGUI> IPv4 = new List<TextMeshProUGUI>();
     public TextMeshProUGUI ConnectedPlayers;
     public Text WaitingForPlayers;
     public GameObject AdressScreen;
@@ -101,9 +83,9 @@ public class IPv4Viewer : IComposable
 
     public void Init()
     {
-        for (int i = 0; i < IPv4.Length; i++)
+        for (int i = 0; i < 2; i++)
         {
-            IPv4[i] = GameObject.Find("IP_" + (i + 1)).GetComponent<TextMeshProUGUI>();
+            IPv4.Add(GameObject.Find("IP_" + (i + 1)).GetComponent<TextMeshProUGUI>());
         }
         ConnectedPlayers  = GameObject.Find("ConnectedPlayers").GetComponent<TextMeshProUGUI>();
         WaitingForPlayers = GameObject.Find("Dots").GetComponent<Text>();
@@ -137,7 +119,7 @@ public class IPv4Viewer : IComposable
             Eyes.DOKill(false);
             Eyes.DOColor(Color.red, 0.5f).SetLoops(6, LoopType.Yoyo).OnComplete(() =>
             {
-                Icon.transform.DOScale(0, 0.75f).OnComplete(() =>
+                Icon.transform.DOScale(0, 0.25f).OnComplete(() =>
                 {
                     Icon.transform.parent.gameObject.SetActive(false);
                 });

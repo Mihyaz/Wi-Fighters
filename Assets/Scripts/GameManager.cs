@@ -42,11 +42,11 @@ public class GameManager : MonoBehaviour, ITimer<float>
         OnGameFinish += () => StopCoroutine(_gameTimeCo);
     }
 
-    public void GameFinish()
+    public void FinishGame()
     {
         OnGameFinish();
     }
-    public void GameStart()
+    public void StartGame()
     {
         OnGameStart();
     }
@@ -64,15 +64,15 @@ public class GameManager : MonoBehaviour, ITimer<float>
         }
         else
         {
-            GameFinish();
+            FinishGame();
             return true;
         }
     }
     public bool CheckIfEverbodyConnected()
     {
-        if (Server.ConnectedClient == 2)
+        if (Server.ConnectedClient == 1)
         {
-            GameStart();
+            StartGame();
             UI.IPv4Viewer.CloseIPv4();
             return true;
         }

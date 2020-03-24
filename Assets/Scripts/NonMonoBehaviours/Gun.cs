@@ -31,7 +31,7 @@ public abstract class Gun
         NextFire = nextFire;
     }
 
-    public abstract Vector2 Fire(Bullet bullet, Transform playerTransform);
+    public abstract void Fire(Bullet bullet, Transform playerTransform, Transform firePointTransform);
     public abstract int ResetAmmo();
 
 }
@@ -54,16 +54,20 @@ public class Rifle : Gun
     {
         return Ammo = ClipSize;
     }
-    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+    public override void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
     {
-        return playerTransform.up * Speed;
+        for (int i = 0; i < SpreadCount; i++)
+        {
+            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
+            bullet.Rigidbody.velocity = playerTransform.up * Speed;
+        }
     }
 }
 
 public class Shotgun : Gun
 {
     float[] spreadAngle = new float[5];
-    int i = 4;
+    int counter = 4;
     public Shotgun(
     float fireRate = 2f,
     float damage = 15,
@@ -75,7 +79,7 @@ public class Shotgun : Gun
     base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
     {
        
-        spreadAngle[0] = 45;
+        spreadAngle[0] = -40;
         spreadAngle[1] = -15;
         spreadAngle[2] = 0;
         spreadAngle[3] = 15;
@@ -85,17 +89,21 @@ public class Shotgun : Gun
     {
         return Ammo = ClipSize;
     }
-    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+    public override void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
     {
-        if (i < 0)
-            i = 4;
+        for (int i = 0; i < SpreadCount; i++)
+        {
+            if (counter <= 0)
+                counter = 4;
 
-        var x = bullet.transform.position.x - playerTransform.position.x;
-        var y = bullet.transform.position.y - playerTransform.position.y;
+            var x = _bullet.transform.position.x - firePointTransform.position.x;
+            var y = _bullet.transform.position.y - firePointTransform.position.y;
 
-        float rotateAngle = (spreadAngle[i]) + (Mathf.Atan2(y, x) * Mathf.Rad2Deg);
-        i--;
-        return new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle * Mathf.Deg2Rad)).normalized * Speed;
+            float rotateAngle = (spreadAngle[counter]) + (Mathf.Atan2(y, x) * Mathf.Rad2Deg);
+            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
+            bullet.Rigidbody.velocity = new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle * Mathf.Deg2Rad)).normalized * Speed;
+            counter--;
+        }
     }
 }
 public class Handgun : Gun
@@ -116,9 +124,13 @@ public class Handgun : Gun
     {
         return Ammo = ClipSize;
     }
-    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+    public override void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
     {
-        return playerTransform.up * Speed;
+        for (int i = 0; i < SpreadCount; i++)
+        {
+            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
+            bullet.Rigidbody.velocity = playerTransform.up * Speed;
+        }
     }
 }
 public class Laser : Gun
@@ -139,8 +151,13 @@ public class Laser : Gun
     {
         return Ammo = ClipSize;
     }
-    public override Vector2 Fire(Bullet bullet, Transform playerTransform)
+
+    public override void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
     {
-        return playerTransform.up * Speed;
+        for (int i = 0; i < SpreadCount; i++)
+        {
+            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
+            bullet.Rigidbody.velocity = playerTransform.up * Speed;
+        }
     }
 }

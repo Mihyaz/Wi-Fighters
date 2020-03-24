@@ -1,5 +1,5 @@
 ﻿public delegate void PlayerDelegate();
-public interface IEvent
+public interface IStateEvent
 {
     PlayerDelegate PlayerDelegate { get; set; }
     event PlayerDelegate OnPlayerDeath;

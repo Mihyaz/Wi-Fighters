@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &25902054
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1806,8 +1806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthBar: {fileID: 460306517}
   DeathDimmer: {fileID: 28545198}
-  Ammo: {fileID: 0}
-  Score: {fileID: 0}
+  Ammo: {fileID: 1662552800}
+  Score: {fileID: 1496020265}
   KillFeed: {fileID: 0}
   Clip: 0
 --- !u!1 &118895262
@@ -4078,7 +4078,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &314667918
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4416,6 +4416,7 @@ MonoBehaviour:
   - Mono: {fileID: 11500000, guid: 4eb5415892d2dec4db4e00a6209f48dd, type: 3}
   - Mono: {fileID: 11500000, guid: 62f2924b2edc19445ab03e94a3e9d02b, type: 3}
   - Mono: {fileID: 11500000, guid: 684c581bdb99df5429ec0d8bb6092cd5, type: 3}
+  - Mono: {fileID: 11500000, guid: fdf9bb2e010f9dc42b67feff64306751, type: 3}
 --- !u!95 &356935300
 Animator:
   serializedVersion: 3
@@ -4442,7 +4443,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356935298}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61b84d49a1916d44b8dc59f2cb1d5580, type: 3}
   m_Name: 
@@ -4450,9 +4451,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
-  Animator: {fileID: 0}
   FirePoint: {fileID: 1742047725}
-  CharacterClass: 0
 --- !u!50 &356935303
 Rigidbody2D:
   serializedVersion: 4
@@ -5718,6 +5717,7 @@ MonoBehaviour:
   - Mono: {fileID: 11500000, guid: 62f2924b2edc19445ab03e94a3e9d02b, type: 3}
   - Mono: {fileID: 11500000, guid: 684c581bdb99df5429ec0d8bb6092cd5, type: 3}
   - Mono: {fileID: 11500000, guid: 4eb5415892d2dec4db4e00a6209f48dd, type: 3}
+  - Mono: {fileID: 11500000, guid: fdf9bb2e010f9dc42b67feff64306751, type: 3}
 --- !u!114 &494943117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5725,7 +5725,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494943112}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 61b84d49a1916d44b8dc59f2cb1d5580, type: 3}
   m_Name: 
@@ -5733,9 +5733,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
-  Animator: {fileID: 0}
   FirePoint: {fileID: 1781988518}
-  CharacterClass: 0
 --- !u!95 &494943118
 Animator:
   serializedVersion: 3
@@ -7824,7 +7822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -10889,7 +10887,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -11744,7 +11742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13438,7 +13436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13511,7 +13509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -13851,7 +13849,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -17476,7 +17474,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1961560518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17797,33 +17795,30 @@ MonoBehaviour:
   GameTime: []
   KillFeeds:
   - KillerText:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1645033764}
+    - {fileID: 8227508395811427250}
+    - {fileID: 26385668}
     DeathText:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 596169970}
+    - {fileID: 279013329}
+    - {fileID: 108600380}
     Icon:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1961560517}
+    - {fileID: 25902053}
+    - {fileID: 314667917}
   - KillerText:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1082853841}
+    - {fileID: 805187755}
+    - {fileID: 267940412}
     DeathText:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 577985530}
+    - {fileID: 2105735252}
+    - {fileID: 930984888}
     Icon:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
+    - {fileID: 1684864368}
+    - {fileID: 2124490938}
+    - {fileID: 783805241}
   IPv4Viewer:
-    IPv4:
-    - {fileID: 0}
-    - {fileID: 0}
     ConnectedPlayers: {fileID: 0}
     WaitingForPlayers: {fileID: 0}
     AdressScreen: {fileID: 0}
@@ -17917,9 +17912,7 @@ MonoBehaviour:
   Command: 
   IsConnected: 0
   Enemy: {fileID: 0}
-  Animator: {fileID: 0}
   FirePoint: {fileID: 530031680}
-  CharacterClass: 0
 --- !u!50 &1983877079
 Rigidbody2D:
   serializedVersion: 4

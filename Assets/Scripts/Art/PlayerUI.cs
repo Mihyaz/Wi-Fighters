@@ -37,10 +37,9 @@ public class PlayerUI : UI, IComposable
         set
         {
             _currentAmmo = value;
-            Ammo.text = _currentAmmo.ToString() + "/" + Clip.ToString();
+            //Ammo.text = _currentAmmo.ToString() + "/" + Clip.ToString();
         }
     }
-
 
     private void Start()
     {

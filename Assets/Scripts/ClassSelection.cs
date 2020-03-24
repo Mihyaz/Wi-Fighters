@@ -1,20 +1,20 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 public class ClassSelection : MonoBehaviour
 {
     private Player _player;
-    private Button[] _choiceButton;
+    private List<Button> _choiceButtons = new List<Button>();
     private RuntimeAnimatorController[] _runtimeAnimatorController;
 
     private void Awake()
     {
-        _choiceButton = new Button[4];
         _runtimeAnimatorController = new RuntimeAnimatorController[4];
         for (int i = 0; i < 4; i++)
         {
             int temp = i; //Delegates use the index as pointer. I had to realloc a new index in order to change i's address.
-            _choiceButton[i] = transform.GetChild(i).GetComponent<Button>();
-            _choiceButton[i].onClick.AddListener(delegate { CreatePlayer(temp); });
+            _choiceButtons.Add(transform.GetChild(i).GetComponent<Button>());
+            _choiceButtons[i].onClick.AddListener(delegate { CreatePlayer(temp); });
         }
         _player = gameObject.transform.root.GetComponent<Player>();
         _runtimeAnimatorController[0] = Resources.Load("Controllers/Rifle")   as RuntimeAnimatorController;
@@ -25,10 +25,10 @@ public class ClassSelection : MonoBehaviour
 
     public void CreatePlayer(int index)
     {
-        _player.CharacterClass = (GunClasses)index;
-        _player.Gun = _player.PickGunClass((GunClasses)index);
-        _player.Animator.runtimeAnimatorController = _runtimeAnimatorController[index];
+        _player.PickGunClass((GunClasses)index);
+        _player.Component.Animator.runtimeAnimatorController = _runtimeAnimatorController[index];
         _player.enabled = true;
+        gameObject.transform.parent.gameObject.SetActive(false);
     }
 }
 

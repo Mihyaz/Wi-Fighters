@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using OnurMihyaz;
 
-public class StateSystem : MonoBehaviour, IState, IEvent
+public class StateSystem : MonoBehaviour, IState, IStateEvent
 {
     public PlayerDelegate PlayerDelegate { get; set; }
     public event PlayerDelegate OnPlayerDeath;
@@ -45,8 +45,6 @@ public class StateSystem : MonoBehaviour, IState, IEvent
     public void Respawn()
     {
         ResetHealth();
-        GetComponent<SpriteRenderer>().enabled = true;
-        GetComponent<CircleCollider2D>().enabled = true;
     }
     public void Kill()
     {

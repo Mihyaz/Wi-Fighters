@@ -97,7 +97,7 @@ public class Server : MonoBehaviour
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 	
-                Player_1.IsConnected = true;
+                Player_1.OnPlayerCreated += delegate { Event_OnPlayerCreated(Player_1); };
                 while (connectedTcpClient.Connected)
                 {
                     Player_1.Command = stream.ReadLine();
@@ -109,7 +109,7 @@ public class Server : MonoBehaviour
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary.
-                Player_2.IsConnected = true;
+                Player_2.OnPlayerCreated += delegate { Event_OnPlayerCreated(Player_2); };
                 while (connectedTcpClient.Connected)
                 {
                     Player_2.Command = stream.ReadLine();
@@ -121,7 +121,7 @@ public class Server : MonoBehaviour
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 		
-                Player_3.IsConnected = true;
+                Player_3.OnPlayerCreated += delegate { Event_OnPlayerCreated(Player_3); };
                 while (connectedTcpClient.Connected)
                 {
                     Player_3.Command = stream.ReadLine();
@@ -134,7 +134,7 @@ public class Server : MonoBehaviour
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
             {
                 // Read incomming stream into byte arrary. 		
-                Player_4.IsConnected = true;
+                Player_4.OnPlayerCreated += delegate { Event_OnPlayerCreated(Player_4); };
                 while (connectedTcpClient.Connected)
                 {
                     Player_4.Command = stream.ReadLine();
@@ -144,6 +144,12 @@ public class Server : MonoBehaviour
         }
 
     }
+
+    private void Event_OnPlayerCreated(Player player)
+    {
+        player.IsConnected = true;
+    }
+
     /// <summary> 	
     /// Send message to client using socket connection. 	
     /// </summary> 	
