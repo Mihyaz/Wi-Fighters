@@ -32,6 +32,7 @@ public class Player : MonoBehaviour, IComposable
     public IComponent Component;
     public IStateEvent @Event;
 
+    private GameObject _blood;
     private PlayerUI UI;
 
     private void Awake()
@@ -137,6 +138,7 @@ public class Player : MonoBehaviour, IComposable
 
             UI.CurrentAmmo = --Gun.Ammo;
         }
+
         if (!CommandManager.Shoot())
         {
             Component.Animator.SetBool("isShooting", false);
@@ -176,7 +178,7 @@ public class Player : MonoBehaviour, IComposable
                 Component.SpriteRenderer.DOColor(Color.white, 0.15f);
             });
 
-            Instantiate(Component.Blood, collision.gameObject.transform.position, collision.gameObject.transform.rotation.normalized);
+            Instantiate(_blood, collision.gameObject.transform.position, collision.gameObject.transform.rotation.normalized);
             State.Health -= (int)Enemy.Gun.Damage;
             UI.Health = (Enemy.Gun.Damage / 100);
             Destroy(collision.gameObject);
@@ -185,6 +187,7 @@ public class Player : MonoBehaviour, IComposable
 
     public void Init()
     {
+        _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
         UI = GetComponentInChildren<PlayerUI>();
         Attack = GetComponent<IAttack>();
         State = GetComponent<IState>();
