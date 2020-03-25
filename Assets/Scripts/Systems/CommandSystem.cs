@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Mihyaz;
+using System;
 
 public class CommandSystem : MonoBehaviour, ICommand
 {
@@ -19,18 +20,25 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public void Executer(string clientMessage)
     {
-        if(clientMessage.Contains("+"))
+        try
         {
-            if (clientMessage.Substring(clientMessage.IndexOf('+'), 5) == "+" + _commandType.CommandsDic[CommandTypes.Move])
+            if (clientMessage.Contains("+"))
             {
-                string newClientMessage = clientMessage.Substring(0, clientMessage.LastIndexOf('+'));
-                string[] sArray = newClientMessage.Split('#');
-                _commandMovement  =  sArray[0];
-                _commandRotation  =  sArray[1];
-                _commandShooting  =  sArray[2];
-                _commandReloading =  sArray[3];
-                AssignName(sArray[4]);
+                if (clientMessage.Substring(clientMessage.IndexOf('+'), 5) == "+" + _commandType.CommandsDic[CommandTypes.Move])
+                {
+                    string newClientMessage = clientMessage.Substring(0, clientMessage.LastIndexOf('+'));
+                    string[] sArray = newClientMessage.Split('#');
+                    _commandMovement = sArray[0];
+                    _commandRotation = sArray[1];
+                    _commandShooting = sArray[2];
+                    _commandReloading = sArray[3];
+                    AssignName(sArray[4]);
+                }
             }
+        }
+        catch
+        {
+            throw new PlayerConnectionException(GetComponent<Player>().Name);
         }
     }
 

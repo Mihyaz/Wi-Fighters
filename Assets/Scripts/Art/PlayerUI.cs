@@ -14,6 +14,7 @@ public class PlayerUI : UI, IComposable
     public TextMeshProUGUI KillFeed;
 
     private float _health;
+    private int _currentAmmo;
     public float Health
     {
         get => _health;
@@ -29,7 +30,6 @@ public class PlayerUI : UI, IComposable
                 HealthBar.color = Color.green;
         }
     }
-    private int _currentAmmo;
     public int Clip;
     public int CurrentAmmo
     {
@@ -37,7 +37,7 @@ public class PlayerUI : UI, IComposable
         set
         {
             _currentAmmo = value;
-            //Ammo.text = _currentAmmo.ToString() + "/" + Clip.ToString();
+            Ammo.text = _currentAmmo.ToString() + "/" + Clip.ToString();
         }
     }
 

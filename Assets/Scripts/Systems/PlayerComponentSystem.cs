@@ -2,8 +2,7 @@
 using Zenject;
 
 public class PlayerComponentSystem : MonoBehaviour, IComponent
-{
-    [Inject] private readonly SpawnPointHandler _spawnPointHandler;
+{[Inject] private readonly SpawnPointHandler _spawnPointHandler;
     public Rigidbody2D RigidBody { get; set; }
     public Transform Transform { get; set; }
     public SpriteRenderer SpriteRenderer { get; set; }
@@ -26,6 +25,5 @@ public class PlayerComponentSystem : MonoBehaviour, IComponent
     {
         SpriteRenderer.enabled = true;
         Collider.enabled = true;
-        Transform.position = _spawnPointHandler.GetSpawnPoint();
     }
 }

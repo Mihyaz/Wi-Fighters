@@ -19,7 +19,7 @@ public class Player : MonoBehaviour, IComposable
     public event PlayerDelegate OnPlayerCreated;
 
     [Inject] private readonly Bullet _bullet;
-    
+    [Inject] private readonly SpawnPointHandler _spawnPointHandler;
 
     [HideInInspector] public Player Enemy;
 
@@ -202,5 +202,6 @@ public class Player : MonoBehaviour, IComposable
         State.ResetThis();
         UI.ResetThis();
         Component.ResetThis();
+        Component.Transform.position = _spawnPointHandler.GetSpawnPoint();
     }
 }

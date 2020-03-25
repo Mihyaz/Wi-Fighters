@@ -8,7 +8,7 @@ public class SpawnPointHandler : MonoBehaviour, IComposable
     private Stack<Vector3> _spawnPoints = new Stack<Vector3>();
     private System.Random _random = new System.Random();
 
-    void Start()
+    void Awake()
     {
         Init();
     }

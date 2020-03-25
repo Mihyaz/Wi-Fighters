@@ -18,12 +18,7 @@ public class LeaderboardSystem : MonoBehaviour
             _players.Add(FindObjectsOfType<Player>()[i]);
         }
         GameManager.Instance.OnGameFinish += Show;
-        GameManager.Instance.OnGameStart += Close;
-    }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            Show();
+        GameManager.Instance.OnGameStart  += Close;
     }
     private void Show()
     {
