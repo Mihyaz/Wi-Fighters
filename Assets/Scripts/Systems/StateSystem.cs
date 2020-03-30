@@ -31,10 +31,12 @@ public class StateSystem : MonoBehaviour, IState, IStateEvent
     {
         Init();
     }
+
     public void ResetHealth()
     {
         Health = 100;
     }
+
     public void Die()
     {
         Death++;
@@ -42,14 +44,17 @@ public class StateSystem : MonoBehaviour, IState, IStateEvent
         GetComponent<CircleCollider2D>().enabled = false;
         StartCoroutine(MihyazDelay.Delay(3, () => OnPlayerRespawn.Invoke()));
     }
+
     public void Respawn()
     {
         ResetHealth();
     }
+
     public void Kill()
     {
         Score++;
     }
+
     public void Dissolve()
     {
         float fade = 1f;

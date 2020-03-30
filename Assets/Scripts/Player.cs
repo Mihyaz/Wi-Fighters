@@ -24,6 +24,7 @@ public class Player : MonoBehaviour, IComposable
     [HideInInspector] public Player Enemy;
 
     public Gun Gun;
+    public PlayerUI UI;
     public Transform FirePoint;
 
     public ICommand CommandManager;
@@ -33,7 +34,6 @@ public class Player : MonoBehaviour, IComposable
     public IStateEvent @Event;
 
     private GameObject _blood;
-    private PlayerUI UI;
 
     private void Awake()
     {
@@ -115,28 +115,30 @@ public class Player : MonoBehaviour, IComposable
 
         if (Component.RigidBody.velocity.magnitude > 0)
             Component.Animator.SetBool("isRunning", true);
-
         else
             Component.Animator.SetBool("isRunning", false);
     }
 
     private void Shoot()
     {
-
-        if (Gun.Ammo <= 0)
+        if(!Attack.isReloading)
         {
-            ReloadWhenOutOfAmmo();
-            return;
-        }
+            if (Gun.Ammo <= 0 && Gun.Ammo != Gun.ClipSize)
+            {
+                Component.Animator.SetBool("isReloading", true);
+                Attack.isReloading = true;
+                return;
+            }
 
-        if (CommandManager.Shoot() && !Attack.isReloading && Time.time > Gun.NextFire)
-        {
-            Component.Animator.SetBool("isShooting", true);
+            if (CommandManager.Shoot() && Time.time > Gun.NextFire)
+            {
+                Component.Animator.SetBool("isShooting", true);
 
-            Gun.NextFire = Time.time + Gun.FireRate;
-            Gun.Fire(_bullet, transform, FirePoint);
+                Gun.NextFire = Time.time + Gun.FireRate;
+                Gun.Fire(_bullet, transform, FirePoint);
 
-            UI.CurrentAmmo = --Gun.Ammo;
+                UI.CurrentAmmo = --Gun.Ammo;
+            }
         }
 
         if (!CommandManager.Shoot())
@@ -153,20 +155,14 @@ public class Player : MonoBehaviour, IComposable
             Attack.isReloading = true;
         }
     }
-    private void ReloadWhenOutOfAmmo()
-    {
-        if (!Attack.isReloading && Gun.Ammo != Gun.ClipSize)
-        {
-            Component.Animator.SetBool("isReloading", true);
-            Attack.isReloading = true;
-        }
-    }
+
     public void StopReloading()
     {
         Component.Animator.SetBool("isReloading", false);
         UI.CurrentAmmo = Gun.ResetAmmo();
         Attack.isReloading = false;
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
@@ -177,11 +173,10 @@ public class Player : MonoBehaviour, IComposable
             {
                 Component.SpriteRenderer.DOColor(Color.white, 0.15f);
             });
-
             Instantiate(_blood, collision.gameObject.transform.position, collision.gameObject.transform.rotation.normalized);
+            Destroy(collision.gameObject);
             State.Health -= (int)Enemy.Gun.Damage;
             UI.Health = (Enemy.Gun.Damage / 100);
-            Destroy(collision.gameObject);
         }
     }
 

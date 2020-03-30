@@ -33,10 +33,12 @@ public class IPv4Viewer : IComposable
         Eyes.DOColor(Color.red, 1.5f).SetLoops(-1, LoopType.Yoyo);
         WaitingForPlayers.DOText("...", 3f).SetLoops(-1, LoopType.Restart);
     }
+
     public void RefreshConnectedPlayers(int connectedPlayers)
     {
         ConnectedPlayers.text = connectedPlayers + "/" + "2";
     }
+
     public void ViewIPv4(string ipv4)
     {
         string[] addresses = ipv4.Split('.');
