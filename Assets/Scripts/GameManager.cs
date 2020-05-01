@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
         _gameTimeCo = MihyazDelay.WaitUntilThis(Countdown);
         _clientsCo = MihyazDelay.WaitUntilThis(CheckIfEverbodyConnected);
         StartCoroutine(_clientsCo);
-        UI.IPv4Viewer.ViewIPv4(Server.GetIpAdress());
+        UI.IPv4Viewer.ViewIPv4(Server.GetIPv4Adress());
         UI.IPv4Viewer.StartGlowEyes();
         OnGameStart += () =>
         {

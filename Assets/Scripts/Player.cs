@@ -6,6 +6,7 @@ using DG.Tweening;
 using OnurMihyaz;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[ExecuteInEditMode]
 public class Player : MonoBehaviour, IComposable
 {
 
@@ -23,10 +24,12 @@ public class Player : MonoBehaviour, IComposable
 
     [HideInInspector] public Player Enemy;
 
+    [Header("Accessibles")]
     public Gun Gun;
     public PlayerUI UI;
     public Transform FirePoint;
 
+    [Header("Interface Objects")]
     public ICommand CommandManager;
     public IAttack Attack;
     public IState State;
@@ -121,12 +124,13 @@ public class Player : MonoBehaviour, IComposable
 
     private void Shoot()
     {
-        if(!Attack.isReloading)
+        if(!Attack._isReloading)
         {
             if (Gun.Ammo <= 0 && Gun.Ammo != Gun.ClipSize)
             {
                 Component.Animator.SetBool("isReloading", true);
-                Attack.isReloading = true;
+
+                Attack._isReloading = true;
                 return;
             }
 
@@ -152,7 +156,7 @@ public class Player : MonoBehaviour, IComposable
         if (CommandManager.Reload() && Gun.Ammo != Gun.ClipSize)
         {
             Component.Animator.SetBool("isReloading", true);
-            Attack.isReloading = true;
+            Attack._isReloading = true;
         }
     }
 
@@ -160,7 +164,7 @@ public class Player : MonoBehaviour, IComposable
     {
         Component.Animator.SetBool("isReloading", false);
         UI.CurrentAmmo = Gun.ResetAmmo();
-        Attack.isReloading = false;
+        Attack._isReloading = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

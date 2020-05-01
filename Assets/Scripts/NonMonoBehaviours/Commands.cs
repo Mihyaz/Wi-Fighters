@@ -6,10 +6,10 @@ public enum CommandTypes
     Reload,
     Stop
 }
-public class CommandType
+public class Commands
 {
     public Dictionary<CommandTypes, string> CommandsDic = new Dictionary<CommandTypes, string>();
-    public CommandType()
+    public Commands()
     {
         CommandsDic.Add(CommandTypes.Move, "Move");
         CommandsDic.Add(CommandTypes.Shoot, "Shoot");

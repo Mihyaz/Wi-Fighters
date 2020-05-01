@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class AttackSystem : MonoBehaviour, IAttack
 {
-    public bool isShooting { get ; set ; }
-    public bool isReloading { get ; set ; }
+    public bool _isShooting { get ; set ; }
+    public bool _isReloading { get ; set ; }
 
     public string Shoot()
     {

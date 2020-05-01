@@ -19,15 +19,15 @@ public class Server : MonoBehaviour
     /// TCPListener to listen for incomming TCP connection 	
     /// requests. 	
     /// </summary> 	
-    private TcpListener tcpListener;
+    private TcpListener _tcpListener;
     /// <summary> 
     /// Background thread for TcpServer workload. 	
     /// </summary> 	
-    private Thread tcpListenerThread;
+    private Thread _tcpListenerThread;
     /// <summary>	
     /// Create handle to connected tcp client. 	
     /// </summary> 	
-    private TcpClient connectedTcpClient;
+    private TcpClient _connectedTcpClient;
     #endregion
 
     private static IPAddress ___IPv4___;
@@ -41,11 +41,11 @@ public class Server : MonoBehaviour
 
     void Start()
     {
-        tcpListenerThread = new Thread(new ThreadStart(ListenForIncommingRequests))
+        _tcpListenerThread = new Thread(new ThreadStart(ListenForIncommingRequests))
         {
             IsBackground = true
         };
-        tcpListenerThread.Start();
+        _tcpListenerThread.Start();
     }
     private void Update()
     {
@@ -69,14 +69,14 @@ public class Server : MonoBehaviour
         try
         {
             // Create listener on localhost port 8000. 	
-            tcpListener = new TcpListener(IPAddress.Any, 8000);
-            tcpListener.Start();
-            Debug.Log("Server is listening");
+            _tcpListener = new TcpListener(IPAddress.Any, 8000);
+            _tcpListener.Start();
+            Debug.Log("<color=yellow>Server is </color><color=red>listening </color>");
 
             while (true)
             {
-                connectedTcpClient = tcpListener.AcceptTcpClient();
-                ThreadPool.QueueUserWorkItem(ThreadProcAsync,connectedTcpClient);
+                _connectedTcpClient = _tcpListener.AcceptTcpClient();
+                ThreadPool.QueueUserWorkItem(ThreadProcAsync,_connectedTcpClient);
                 Debug.Log("Client: " + (ConnectedClient + 1));
             }
         }
@@ -91,6 +91,7 @@ public class Server : MonoBehaviour
         var connectedTcpClient = (TcpClient)obj;
         ConnectedClient++;
         PlayerProfile player = new PlayerProfile("Player" + ConnectedClient);
+
         // Get a stream object for reading 
         if (player.Name == "Player1")
         {
@@ -104,6 +105,7 @@ public class Server : MonoBehaviour
                 }
             }
         }
+
         if (player.Name == "Player2")
         {
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
@@ -116,6 +118,7 @@ public class Server : MonoBehaviour
                 }
             }
         }
+
         if (player.Name == "Player3")
         {
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
@@ -129,6 +132,7 @@ public class Server : MonoBehaviour
                 }
             }
         }
+
         if (player.Name == "Player4")
         {
             using (StreamReader stream = new StreamReader(connectedTcpClient.GetStream()))
@@ -142,7 +146,6 @@ public class Server : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void Event_OnPlayerCreated(Player player)
@@ -153,9 +156,9 @@ public class Server : MonoBehaviour
     /// <summary> 	
     /// Send message to client using socket connection. 	
     /// </summary> 	
-    private void SendMessageToClient(string message)
+    public void SendMessageToClient(string message)
     {
-        if (connectedTcpClient == null)
+        if (_connectedTcpClient == null)
         {
             // Connection Failed
             return;
@@ -165,7 +168,7 @@ public class Server : MonoBehaviour
         try
         {
             // Get a stream object for writing. 			
-            NetworkStream stream = connectedTcpClient.GetStream();
+            NetworkStream stream = _connectedTcpClient.GetStream();
             if (stream.CanWrite)
             {
                 string serverMessage = message;
@@ -181,6 +184,7 @@ public class Server : MonoBehaviour
         }
     }
 
+    [Obsolete]
     public static string GetIpAdress()
     {
         string strHostName = Dns.GetHostName();
@@ -188,6 +192,14 @@ public class Server : MonoBehaviour
         IPAddress[] addr = ipEntry.AddressList;
         ___IPv4___ = addr[1];
         return ___IPv4___.MapToIPv4().ToString();
+    }
+
+    public static string GetIPv4Adress()
+    {
+        IPAddress[] IPv4Addresses = Array.FindAll(Dns.GetHostEntry(string.Empty).AddressList,
+        a => a.AddressFamily == AddressFamily.InterNetwork);
+
+        return IPv4Addresses[1].ToString();
     }
 
 }

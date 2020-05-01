@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using Mihyaz;
-using System;
 
 public class CommandSystem : MonoBehaviour, ICommand
 {
-    private CommandType _commandType;
+    private Commands _commandType;
     private Converter.StringToVector2 _stringToVector2;
 
     private string _commandMovement = "";
@@ -12,9 +11,11 @@ public class CommandSystem : MonoBehaviour, ICommand
     private string _commandShooting = "";
     private string _commandReloading = "";
 
+    public bool Executed { get; private set; }
+
     private void Awake()
     {
-        _commandType = new CommandType();
+        _commandType = new Commands();
         _stringToVector2 = new Converter.StringToVector2();
     }
 
@@ -33,6 +34,7 @@ public class CommandSystem : MonoBehaviour, ICommand
                     _commandShooting = sArray[2];
                     _commandReloading = sArray[3];
                     AssignName(sArray[4]);
+                    AssignClass(sArray[5]);
                 }
             }
         }
@@ -72,6 +74,15 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public void AssignName(string name)
     {
-        GetComponent<Player>().Name = name;
+        if(!Executed)
+        {
+            GetComponent<Player>().Name = name;
+            Executed = true;
+        }
     }
+
+    public void AssignClass(string index)
+    {
+    }
+
 }

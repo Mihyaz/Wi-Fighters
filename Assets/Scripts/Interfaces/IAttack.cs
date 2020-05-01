@@ -4,6 +4,6 @@
     string StopShooting();
     string Reload();
     string StopReload();
-    bool isShooting { get; set; }
-    bool isReloading { get; set; }
+    bool _isShooting { get; set; }
+    bool _isReloading { get; set; }
 }

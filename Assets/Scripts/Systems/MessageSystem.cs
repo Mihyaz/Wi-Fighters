@@ -1,29 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MessageSystem : MonoBehaviour, IAttack
 {
-    public bool isShooting { get; set; }
-    public bool isReloading { get; set; }
+    public bool _isShooting { get; set; }
+    public bool _isReloading { get; set; }
 
-    public string Shoot()
-    {
-        return "Shoot";
-    }
+    public string Shoot() => "Shoot";
 
-    public string StopShooting()
-    {
-        return "Stop";
-    }
+    public string StopShooting() => "Stop";
 
-    public string Reload()
-    {
-        return "Reload";
-    }
+    public string Reload() => "Reload";
 
-    public string StopReload()
-    {
-        return "Stop";
-    }
+    public string StopReload() => "Stop";
 }

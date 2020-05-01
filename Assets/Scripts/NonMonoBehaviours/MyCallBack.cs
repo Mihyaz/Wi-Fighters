@@ -7,14 +7,23 @@ public static class MyCallBack
 {
     public delegate bool TheCallback();
     public delegate void Action<T>();
-    public static T OnCompleted<T>(this T t, Action action)
+    //public static T OnCompleted<T>(this T t, Action action)
+    //{
+    //    action();
+    //    return t;
+    //}
+
+    public static void OnCompleted<T>(this T t, Action action)
     {
-        action();
-        return t;
+        action.Invoke();
     }
 
-    public static void OnCompletedVoid<T>(this T t, Action action)
+    public static T OnUpdated<T>(this T t, Action action)
     {
-        action();
+        if (t == null)
+        {
+            return t;
+        }
+        return t;
     }
 }
