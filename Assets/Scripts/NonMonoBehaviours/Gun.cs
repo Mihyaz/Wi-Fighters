@@ -79,7 +79,7 @@ public class Shotgun : Gun
     base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
     {
        
-        spreadAngle[0] = -40;
+        spreadAngle[0] = -30;
         spreadAngle[1] = -15;
         spreadAngle[2] = 0;
         spreadAngle[3] = 15;

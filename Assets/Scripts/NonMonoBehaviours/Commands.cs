@@ -16,4 +16,16 @@ public class Commands
         CommandsDic.Add(CommandTypes.Reload, "Reload");
         CommandsDic.Add(CommandTypes.Stop, "Stop");
     }
+
+    public struct Executables
+    {
+        public bool NameExecuted;
+        public bool ClassExecuted;
+
+        public Executables(bool Name, bool Class)
+        {
+            NameExecuted = Name;
+            ClassExecuted = Class;
+        }
+    }
 }

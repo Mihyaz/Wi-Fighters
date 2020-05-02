@@ -16,6 +16,7 @@ public class Player : MonoBehaviour, IComposable
     [HideInInspector]
     public bool IsConnected;
     public string Name { get; set; }
+    public GunClasses GunClass { get; set; }
     #endregion
     public event PlayerDelegate OnPlayerCreated;
 
@@ -44,9 +45,15 @@ public class Player : MonoBehaviour, IComposable
         if (enabled)
             enabled = false;
     }
-    private void Start()
+
+    public void InvokePlayerCreated(int classIndex)
     {
         OnPlayerCreated?.Invoke();
+        GetComponentInChildren<ClassSelection>().CreatePlayer(classIndex);
+    }
+
+    private void Start()
+    {
         @Event.OnPlayerDeath += () =>
         {
             UI.SetUI();

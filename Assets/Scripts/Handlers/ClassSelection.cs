@@ -30,8 +30,6 @@ public class ClassSelection : MonoBehaviour
 
         _player.Component.Animator.runtimeAnimatorController = _animatorController[index];
 
-        _player.enabled = true;
-
         gameObject.transform.parent.gameObject.SetActive(false);
     }
 }

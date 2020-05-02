@@ -4453,7 +4453,6 @@ MonoBehaviour:
   Enemy: {fileID: 0}
   UI: {fileID: 1170931115}
   FirePoint: {fileID: 1742047725}
-  myScore: 0
 --- !u!50 &356935303
 Rigidbody2D:
   serializedVersion: 4
@@ -5737,7 +5736,6 @@ MonoBehaviour:
   Enemy: {fileID: 0}
   UI: {fileID: 115200763}
   FirePoint: {fileID: 1781988518}
-  myScore: 0
 --- !u!95 &494943118
 Animator:
   serializedVersion: 3
@@ -6765,6 +6763,7 @@ GameObject:
   m_Component:
   - component: {fileID: 585314145}
   - component: {fileID: 585314144}
+  - component: {fileID: 585314146}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6799,6 +6798,23 @@ Transform:
   m_Father: {fileID: 1486101110}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &585314146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 585314143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea865f79049742a41aaf9c7d4d691c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Players:
+  - {fileID: 494943117}
+  - {fileID: 356935302}
+  - {fileID: 1983877078}
+  - {fileID: 1983877078}
 --- !u!1 &596169968
 GameObject:
   m_ObjectHideFlags: 0
@@ -18199,7 +18215,6 @@ MonoBehaviour:
   Enemy: {fileID: 0}
   UI: {fileID: 0}
   FirePoint: {fileID: 530031680}
-  myScore: 0
 --- !u!50 &1983877079
 Rigidbody2D:
   serializedVersion: 4

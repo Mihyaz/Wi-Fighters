@@ -3,7 +3,9 @@ using Mihyaz;
 
 public class CommandSystem : MonoBehaviour, ICommand
 {
+    public ClassSelection ClassSelection;
     private Commands _commandType;
+    private Commands.Executables _executables;
     private Converter.StringToVector2 _stringToVector2;
 
     private string _commandMovement = "";
@@ -11,11 +13,12 @@ public class CommandSystem : MonoBehaviour, ICommand
     private string _commandShooting = "";
     private string _commandReloading = "";
 
-    public bool Executed { get; private set; }
 
     private void Awake()
     {
+        ClassSelection = GetComponentInChildren<ClassSelection>(true);
         _commandType = new Commands();
+        _executables = new Commands.Executables(false, false);
         _stringToVector2 = new Converter.StringToVector2();
     }
 
@@ -74,15 +77,40 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public void AssignName(string name)
     {
-        if(!Executed)
+        if(!_executables.NameExecuted)
         {
             GetComponent<Player>().Name = name;
-            Executed = true;
+            _executables.NameExecuted = true;
         }
     }
 
     public void AssignClass(string index)
     {
+        if(!_executables.ClassExecuted)
+        {
+            int i;
+            switch (index)
+            {
+                case "Rifle":
+                    i = 0;
+                    break;
+                case "Shotgun":
+                    i = 1;
+                    break;
+                case "Handgun":
+                    i = 2;
+                    break;
+                case "Laser":
+                    i = 3;
+                    break;
+                default:
+                    i = 0;
+                    break;
+            }
+
+            GetComponent<Player>().InvokePlayerCreated(i);
+           _executables.ClassExecuted = true;
+        }
     }
 
 }

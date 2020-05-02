@@ -51,7 +51,6 @@ public class Server : MonoBehaviour
     {
         //if(ConnectedClient == 4)
 
-        if (Player_1.IsConnected)
             Player_1.CommandManager.Executer(Player_1.Command);
 
         if (Player_2.IsConnected)

@@ -9,7 +9,7 @@ public class DataBinder : DataBinderBase
     public override void Binder()
     {
         base.Binder();
-        VisualContainer.Bind<TextMeshProUGUI>().FromReference(ref _playerUI.Score).To(ref _player.myScore);
+        //VisualContainer.Bind<TextMeshProUGUI>().FromReference(ref _playerUI.Score).To(ref _player.myScore);
     }
 
     private void Awake()
