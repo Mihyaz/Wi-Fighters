@@ -25,6 +25,9 @@ public class Player : MonoBehaviour, IComposable
 
     [HideInInspector] public Player Enemy;
 
+    [Header("Server")]
+    public Server Server;
+
     [Header("Accessibles")]
     public Gun Gun;
     public PlayerUI UI;
@@ -145,6 +148,7 @@ public class Player : MonoBehaviour, IComposable
 
             if (CommandManager.Shoot() && Time.time > Gun.NextFire)
             {
+                Server.SendMessageToClient(Name + "+" + "Shoot");
                 Component.Animator.SetBool("isShooting", true);
 
                 Gun.NextFire = Time.time + Gun.FireRate;
@@ -164,6 +168,7 @@ public class Player : MonoBehaviour, IComposable
     {
         if (CommandManager.Reload() && Gun.Ammo != Gun.ClipSize)
         {
+            Server.SendMessageToClient(Name + "+" + "Reload");
             Component.Animator.SetBool("isReloading", true);
             Attack._isReloading = true;
         }

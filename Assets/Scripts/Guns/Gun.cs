@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-public enum GunClasses
+public enum GunClasses 
 {
     Rifle,
     Shotgun,
     Handgun,
     Laser
 }
-
 
 public abstract class Gun
 {
