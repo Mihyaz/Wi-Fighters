@@ -65,6 +65,7 @@ public class Player : MonoBehaviour, IComposable
         GameManager.Instance.OnGameFinish += () => ResetThis();
         ResetThis();
     }
+
     private void Update()
     {
         Shoot();
@@ -72,6 +73,7 @@ public class Player : MonoBehaviour, IComposable
         Move();
         Rotate();
     }
+
     public void PickGunClass(GunClasses choice)
     {
         switch (choice)

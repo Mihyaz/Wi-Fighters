@@ -8,13 +8,13 @@ public enum CommandTypes
 }
 public class Commands
 {
-    public Dictionary<CommandTypes, string> CommandsDic = new Dictionary<CommandTypes, string>();
+    public Dictionary<CommandTypes, string> CommandsDictionary = new Dictionary<CommandTypes, string>();
     public Commands()
     {
-        CommandsDic.Add(CommandTypes.Move, "Move");
-        CommandsDic.Add(CommandTypes.Shoot, "Shoot");
-        CommandsDic.Add(CommandTypes.Reload, "Reload");
-        CommandsDic.Add(CommandTypes.Stop, "Stop");
+        CommandsDictionary.Add(CommandTypes.Move, "Move");
+        CommandsDictionary.Add(CommandTypes.Shoot, "Shoot");
+        CommandsDictionary.Add(CommandTypes.Reload, "Reload");
+        CommandsDictionary.Add(CommandTypes.Stop, "Stop");
     }
 
     public struct Executables

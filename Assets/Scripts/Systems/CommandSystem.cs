@@ -3,7 +3,6 @@ using Mihyaz;
 
 public class CommandSystem : MonoBehaviour, ICommand
 {
-    public ClassSelection ClassSelection;
     private Commands _commandType;
     private Commands.Executables _executables;
     private Converter.StringToVector2 _stringToVector2;
@@ -16,7 +15,6 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     private void Awake()
     {
-        ClassSelection = GetComponentInChildren<ClassSelection>(true);
         _commandType = new Commands();
         _executables = new Commands.Executables(false, false);
         _stringToVector2 = new Converter.StringToVector2();
@@ -28,7 +26,7 @@ public class CommandSystem : MonoBehaviour, ICommand
         {
             if (clientMessage.Contains("+"))
             {
-                if (clientMessage.Substring(clientMessage.IndexOf('+'), 5) == "+" + _commandType.CommandsDic[CommandTypes.Move])
+                if (clientMessage.Substring(clientMessage.IndexOf('+'), 5) == "+" + _commandType.CommandsDictionary[CommandTypes.Move])
                 {
                     string newClientMessage = clientMessage.Substring(0, clientMessage.LastIndexOf('+'));
                     string[] sArray = newClientMessage.Split('#');
@@ -49,9 +47,9 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public bool Shoot()
     {
-        if (_commandShooting == _commandType.CommandsDic[CommandTypes.Shoot])
+        if (_commandShooting == _commandType.CommandsDictionary[CommandTypes.Shoot])
             return true;
-        else if (_commandShooting == _commandType.CommandsDic[CommandTypes.Stop])
+        else if (_commandShooting == _commandType.CommandsDictionary[CommandTypes.Stop])
             return false;
         else
             return false;
@@ -59,7 +57,7 @@ public class CommandSystem : MonoBehaviour, ICommand
 
     public bool Reload()
     {
-        if (_commandReloading == _commandType.CommandsDic[CommandTypes.Reload])
+        if (_commandReloading == _commandType.CommandsDictionary[CommandTypes.Reload])
             return true;
         else
             return false;

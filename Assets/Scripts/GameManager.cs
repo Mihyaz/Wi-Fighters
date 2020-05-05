@@ -68,9 +68,10 @@ public class GameManager : MonoBehaviour, ITimer<float>
             return true;
         }
     }
+
     public bool CheckIfEverbodyConnected()
     {
-        if (Server.ConnectedClient == 2)
+        if (Server.ConnectedClient == 1)
         {
             StartGame();
             UI.IPv4Viewer.CloseIPv4();

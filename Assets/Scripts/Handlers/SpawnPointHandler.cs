@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using Random = System.Random;
 public class SpawnPointHandler : MonoBehaviour, IComposable
 {
     private Stack<Vector3> _spawnPoints = new Stack<Vector3>();
-    private System.Random _random = new System.Random();
+    private Random _random = new Random();
 
     void Awake()
     {
