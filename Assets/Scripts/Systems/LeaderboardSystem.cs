@@ -13,7 +13,7 @@ public class LeaderboardSystem : MonoBehaviour
 
     private void Awake()
     {
-        for (int i = 0; i < 2; i++) // Will be 4
+        for (int i = 0; i < 3; i++) // Will be 4
         {
             _players.Add(FindObjectsOfType<Player>()[i]);
         }

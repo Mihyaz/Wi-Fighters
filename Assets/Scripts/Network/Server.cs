@@ -51,16 +51,10 @@ public class Server : MonoBehaviour
     {
         //if(ConnectedClient == 4)
 
-            Player_1.CommandManager.Executer(Player_1.Command);
-
-        if (Player_2.IsConnected)
-            Player_2.CommandManager.Executer(Player_2.Command);
-
-        //if (Player_3.IsConnected)
-        //    Player_3.CommandManager.Executer(Player_3.Command);
-
-        //if (Player_4.IsConnected)
-        //    Player_4.CommandManager.Executer(Player_4.Command);
+        Player_1.CommandManager.Executer(Player_1.Command);
+        Player_2.CommandManager.Executer(Player_2.Command);
+        Player_3.CommandManager.Executer(Player_3.Command);
+        Player_4.CommandManager.Executer(Player_4.Command);
     }
 
     private void ListenForIncommingRequests()
@@ -75,7 +69,7 @@ public class Server : MonoBehaviour
             while (true)
             {
                 _connectedTcpClient = _tcpListener.AcceptTcpClient();
-                ThreadPool.QueueUserWorkItem(ThreadProcAsync,_connectedTcpClient);
+                ThreadPool.QueueUserWorkItem(ThreadProcAsync, _connectedTcpClient);
                 Debug.Log("Client: " + (ConnectedClient + 1));
             }
         }
@@ -127,7 +121,6 @@ public class Server : MonoBehaviour
                 while (connectedTcpClient.Connected)
                 {
                     Player_3.Command = stream.ReadLine();
-                    Debug.Log("This is " + player.Name);
                 }
             }
         }

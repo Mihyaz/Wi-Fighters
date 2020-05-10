@@ -6,7 +6,6 @@ using DG.Tweening;
 using OnurMihyaz;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[ExecuteInEditMode]
 public class Player : MonoBehaviour, IComposable
 {
 
@@ -15,15 +14,14 @@ public class Player : MonoBehaviour, IComposable
     public string Command;
     [HideInInspector]
     public bool IsConnected;
-    public string Name { get; set; }
-    public GunClasses GunClass { get; set; }
+    public string Name;
     #endregion
     public event PlayerDelegate OnPlayerCreated;
 
-    [Inject] private readonly Bullet _bullet;
+    private Bullet _bullet;
     [Inject] private readonly SpawnPointHandler _spawnPointHandler;
 
-    [HideInInspector] public Player Enemy;
+    public Player Enemy;
 
     [Header("Server")]
     public Server Server;
@@ -201,6 +199,7 @@ public class Player : MonoBehaviour, IComposable
     public void Init()
     {
         _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
+        _bullet = GetComponentInChildren<Bullet>();
         UI = GetComponentInChildren<PlayerUI>();
         Attack = GetComponent<IAttack>();
         State = GetComponent<IState>();
@@ -211,10 +210,13 @@ public class Player : MonoBehaviour, IComposable
 
     public void ResetThis()
     {
-        Gun.ResetAmmo();
-        State.ResetThis();
-        UI.ResetThis();
-        Component.ResetThis();
-        Component.Transform.position = _spawnPointHandler.GetSpawnPoint();
+        StartCoroutine(MihyazDelay.Delay(0.5f, () =>
+        {
+            Gun.ResetAmmo();
+            State.ResetThis();
+            UI.ResetThis();
+            Component.ResetThis();
+            Component.Transform.position = _spawnPointHandler.GetSpawnPoint();
+        }));
     }
 }

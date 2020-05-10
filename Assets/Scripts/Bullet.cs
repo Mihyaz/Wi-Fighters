@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [SerializeField] public Transform _transform;
-    [SerializeField] public Rigidbody2D Rigidbody;
+    private Transform _transform;
+    public Rigidbody2D Rigidbody;
 
     public float Damage;
     public Player Player;
