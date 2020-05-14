@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-public enum GunClasses 
+﻿using Boo.Lang;
+using DG.Tweening;
+using System.IO.IsolatedStorage;
+using UnityEngine;
+public enum GunClasses
 {
     Rifle,
     Shotgun,
@@ -75,9 +78,7 @@ public class LinearShot : IShot
 
 public class SpreadShot : IShot
 {
-    private float[] _spreadAngle = new float[5];
-    private int _counter = 4;
-
+    private int _angle = -30;
     private int _spreadCount;
     private float _speed;
 
@@ -85,28 +86,17 @@ public class SpreadShot : IShot
     {
         _spreadCount = SpreadCount;
         _speed = Speed;
-
-        _spreadAngle[0] = -30;
-        _spreadAngle[1] = -15;
-        _spreadAngle[2] = 0;
-        _spreadAngle[3] = 15;
-        _spreadAngle[4] = 30;
-
     }
     public void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
     {
         for (int i = 0; i < _spreadCount; i++)
         {
-            if (_counter <= 0)
-                _counter = 4;
+            Transform points = firePointTransform;
+            points.eulerAngles = new Vector3(0, 0, _angle + (i * 15));
 
-            var x = _bullet.transform.position.x - firePointTransform.position.x;
-            var y = _bullet.transform.position.y - firePointTransform.position.y;
-
-            float rotateAngle = (_spreadAngle[_counter]) + (Mathf.Atan2(y, x) * Mathf.Rad2Deg);
             Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
-            bullet.Rigidbody.velocity = new Vector2(Mathf.Cos(rotateAngle * Mathf.Deg2Rad), Mathf.Sin(rotateAngle * Mathf.Deg2Rad)).normalized * _speed;
-            _counter--;
+            bullet.transform.Rotate(bullet.transform.rotation.x, bullet.transform.rotation.y, points.eulerAngles.z);
+            bullet.Rigidbody.velocity = points.up * _speed;
         }
     }
 }

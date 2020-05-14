@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
     {
         if (gameObject != null)
             Instance = this;
-        TimeInSeconds = 10 * 60; // 10 minutes
+        TimeInSeconds = 2 * 60; // 10 minutes
     }
 
     private void Start()
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
 
     public bool CheckIfEverbodyConnected()
     {
-        if (Server.ConnectedClient == 2)
+        if (Server.ConnectedClient == 1)
         {
             StartGame();
             UI.IPv4Viewer.CloseIPv4();

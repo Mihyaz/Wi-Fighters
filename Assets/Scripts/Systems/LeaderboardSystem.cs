@@ -7,19 +7,16 @@ using UnityEngine;
 
 public class LeaderboardSystem : MonoBehaviour
 {
-    private List<Player> _players = new List<Player>();
-    [SerializeField]
-    private List<Attributes> _attributes = new List<Attributes>();
+    [SerializeField] private List<Player> _players = new List<Player>();
+
+    [SerializeField] private List<Attributes> _attributes = new List<Attributes>();
 
     private void Awake()
     {
-        for (int i = 0; i < 3; i++) // Will be 4
-        {
-            _players.Add(FindObjectsOfType<Player>()[i]);
-        }
         GameManager.Instance.OnGameFinish += Show;
         GameManager.Instance.OnGameStart  += Close;
     }
+
     private void Show()
     {
         gameObject.SetActive(true);

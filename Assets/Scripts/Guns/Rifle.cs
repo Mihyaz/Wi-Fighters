@@ -2,7 +2,7 @@
 {
     public Rifle(
     float fireRate = 0.1f,
-    float damage = 5,
+    float damage = 15,
     float nextFire = 0.0f,
     float speed = 100f,
     int clipSize = 20,

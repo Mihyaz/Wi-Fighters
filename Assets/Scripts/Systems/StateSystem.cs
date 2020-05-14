@@ -82,8 +82,6 @@ public class StateSystem : MonoBehaviour, IState, IStateEvent
 
     public void ResetThis()
     {
-        Score = 0;
         Health = 100;
-        Death = 0;
     }
 }

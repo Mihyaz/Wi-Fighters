@@ -14,14 +14,15 @@ public class Player : MonoBehaviour, IComposable
     public string Command;
     [HideInInspector]
     public bool IsConnected;
-    public string Name;
+    public string Name { get; set; }
     #endregion
     public event PlayerDelegate OnPlayerCreated;
 
-    private Bullet _bullet;
     [Inject] private readonly SpawnPointHandler _spawnPointHandler;
 
+    [Header("In Game Objects")]
     public Player Enemy;
+    public Bullet Bullet;
 
     [Header("Server")]
     public Server Server;
@@ -62,8 +63,8 @@ public class Player : MonoBehaviour, IComposable
             Enemy.UI.Score.text = Enemy.State.Score.ToString();
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
-        @Event.OnPlayerRespawn += () => ResetThis();
-        GameManager.Instance.OnGameFinish += () => ResetThis();
+        @Event.OnPlayerRespawn += ResetThis;
+        GameManager.Instance.OnGameFinish += ResetThis;
         ResetThis();
     }
 
@@ -95,7 +96,7 @@ public class Player : MonoBehaviour, IComposable
                 Gun = new Rifle();
                 break;
         }
-        _bullet.Init(Gun.Damage, this);
+        Bullet.Init(Gun.Damage, this);
         UI.Init(Gun.Ammo, Gun.ClipSize);
     }
     private void Rotate()
@@ -118,7 +119,7 @@ public class Player : MonoBehaviour, IComposable
         else
         {
             Component.Transform.localEulerAngles = new Vector3(0f, 0f, Mathf.Atan2(
-                CommandManager.GetRotation().x, CommandManager.GetRotation().y) * -Mathf.Rad2Deg); // this does the actual rotaion according to inputs
+                CommandManager.GetRotation().x, CommandManager.GetRotation().y) * -Mathf.Rad2Deg); // this does the actual rotation according to inputs
         }
     }
 
@@ -150,7 +151,7 @@ public class Player : MonoBehaviour, IComposable
                 Component.Animator.SetBool("isShooting", true);
 
                 Gun.NextFire = Time.time + Gun.FireRate;
-                Gun.Fire(_bullet, transform, FirePoint);
+                Gun.Fire(Bullet, transform, FirePoint);
 
                 UI.CurrentAmmo = --Gun.Ammo;
             }
@@ -189,17 +190,19 @@ public class Player : MonoBehaviour, IComposable
             {
                 Component.SpriteRenderer.DOColor(Color.white, 0.15f);
             });
+
             Instantiate(_blood, collision.gameObject.transform.position, collision.gameObject.transform.rotation.normalized);
+
             Destroy(collision.gameObject);
+
             State.Health -= (int)Enemy.Gun.Damage;
-            UI.Health = (Enemy.Gun.Damage / 100);
+            UI.Health = Enemy.Gun.Damage / 100;
         }
     }
 
     public void Init()
     {
         _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        _bullet = GetComponentInChildren<Bullet>();
         UI = GetComponentInChildren<PlayerUI>();
         Attack = GetComponent<IAttack>();
         State = GetComponent<IState>();
