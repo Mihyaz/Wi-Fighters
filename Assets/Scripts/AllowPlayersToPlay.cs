@@ -8,9 +8,10 @@ public class AllowPlayersToPlay : MonoBehaviour
     {
         GameManager.Instance.OnGameStart += () =>
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Players[i].enabled = true;
+                if(Players[i].IsConnected)
+                    Players[i].enabled = true;
             }
         };
     }

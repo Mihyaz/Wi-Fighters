@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, IComposable
     public bool IsConnected;
     public string Name { get; set; }
     #endregion
-    public event PlayerDelegate OnPlayerCreated;
+    public event CreateTriggered OnPlayerCreated;
 
     [Inject] private readonly SpawnPointHandler _spawnPointHandler;
 
@@ -48,22 +48,17 @@ public class Player : MonoBehaviour, IComposable
             enabled = false;
     }
 
-    public void InvokePlayerCreated(int classIndex)
-    {
-        OnPlayerCreated?.Invoke();
-        GetComponentInChildren<ClassSelection>().CreatePlayer(classIndex);
-    }
 
     private void Start()
     {
-        @Event.OnPlayerDeath += () =>
+        Event.OnPlayerDeath += () =>
         {
             UI.SetUI();
             Enemy.State.Score++;
             Enemy.UI.Score.text = Enemy.State.Score.ToString();
             GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
         };
-        @Event.OnPlayerRespawn += ResetThis;
+        Event.OnPlayerRespawn += ResetThis;
         GameManager.Instance.OnGameFinish += ResetThis;
         ResetThis();
     }
@@ -74,6 +69,10 @@ public class Player : MonoBehaviour, IComposable
         Reload();
         Move();
         Rotate();
+    }
+    public void InvokePlayerCreated(int classIndex)
+    {
+        OnPlayerCreated?.Invoke(classIndex);
     }
 
     public void PickGunClass(GunClasses choice)
@@ -151,7 +150,7 @@ public class Player : MonoBehaviour, IComposable
                 Component.Animator.SetBool("isShooting", true);
 
                 Gun.NextFire = Time.time + Gun.FireRate;
-                Gun.Fire(Bullet, transform, FirePoint);
+                Gun.Fire(Bullet, FirePoint);
 
                 UI.CurrentAmmo = --Gun.Ammo;
             }
@@ -202,13 +201,13 @@ public class Player : MonoBehaviour, IComposable
 
     public void Init()
     {
-        _blood = Resources.Load("Prefabs/BloodParticle") as GameObject;
-        UI = GetComponentInChildren<PlayerUI>();
-        Attack = GetComponent<IAttack>();
-        State = GetComponent<IState>();
+        _blood         = Resources.Load("Prefabs/BloodParticle") as GameObject;
+        UI             = GetComponentInChildren<PlayerUI>();
+        Attack         = GetComponent<IAttack>();
+        State          = GetComponent<IState>();
         CommandManager = GetComponent<ICommand>();
-        Component = GetComponent<IComponent>();
-        @Event = GetComponent<IStateEvent>();
+        Component      = GetComponent<IComponent>();
+        Event         = GetComponent<IStateEvent>();
     }
 
     public void ResetThis()

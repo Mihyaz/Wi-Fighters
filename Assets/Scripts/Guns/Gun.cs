@@ -33,9 +33,9 @@ public abstract class Gun
         NextFire = nextFire;
     }
 
-    public virtual void Fire(Bullet bullet, Transform playerTransform, Transform firePointTransform)
+    public virtual void Fire(Bullet bullet, Transform firePointTransform)
     {
-        ShootingType.Fire(bullet, playerTransform, firePointTransform);
+        ShootingType.Fire(bullet, firePointTransform);
     }
 
     public void SetShootingAbility(IShot newShootingType)
@@ -52,7 +52,7 @@ public abstract class Gun
 
 public interface IShot
 {
-    void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform);
+    void Fire(Bullet _bullet, Transform firePointTransform);
 }
 
 public class LinearShot : IShot
@@ -66,12 +66,12 @@ public class LinearShot : IShot
         _speed = Speed;
     }
 
-    public void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
+    public void Fire(Bullet _bullet, Transform firePointTransform)
     {
         for (int i = 0; i < _spreadCount; i++)
         {
             Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
-            bullet.Rigidbody.velocity = playerTransform.up * _speed;
+            bullet.Rigidbody.velocity = firePointTransform.up * _speed;
         }
     }
 }
@@ -87,7 +87,7 @@ public class SpreadShot : IShot
         _spreadCount = SpreadCount;
         _speed = Speed;
     }
-    public void Fire(Bullet _bullet, Transform playerTransform, Transform firePointTransform)
+    public void Fire(Bullet _bullet, Transform firePointTransform)
     {
         for (int i = 0; i < _spreadCount; i++)
         {
