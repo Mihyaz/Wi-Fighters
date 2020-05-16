@@ -5,13 +5,13 @@ using OnurMihyaz;
 using System;
 using DG.Tweening;
 using UnityEngine.UI;
+using System.IO.IsolatedStorage;
 
 public class GameUI : UI
 {
     private int FunctionCounter;
 
     public List<TextMeshProUGUI> GameTime;
-    public List<KillFeed> KillFeeds;
     public IPv4Viewer IPv4Viewer;
 
     private void Awake()
@@ -19,55 +19,31 @@ public class GameUI : UI
         IPv4Viewer.Init();
     }
 
-    public void RefreshKillFeed(string PlayerKill, string PlayerDie)
-    {
-        if (FunctionCounter == 3)
-            FunctionCounter = 0;
 
-        for (int i = 0; i < KillFeeds.Count; i++)
+    [Serializable]
+    [Obsolete]
+    public class KillFeed : ITimer<float>
+    {
+        public float TimeInSeconds { get; set; }
+        public List<GameObject> FeedPanels;
+        public List<TextMeshProUGUI> KillerText = new List<TextMeshProUGUI>();
+        public List<TextMeshProUGUI> DeathText = new List<TextMeshProUGUI>();
+        public List<GameObject> Icon = new List<GameObject>();
+
+        public bool Countdown()
         {
-            KillFeeds[i].KillerText[FunctionCounter].text = PlayerKill;
-            KillFeeds[i].DeathText[FunctionCounter].text = PlayerDie;
-            KillFeeds[i].KillerText[FunctionCounter].gameObject.SetActive(true);
-            KillFeeds[i].DeathText[FunctionCounter].gameObject.SetActive(true);
-            KillFeeds[i].Icon[FunctionCounter].SetActive(true);
-        }
-        StartCoroutine(MihyazDelay.Delay(5f, () =>
-        {
-            int ct = FunctionCounter;
-            for (int i = 0; i < KillFeeds.Count; i++)
+            if (TimeInSeconds > 0)
             {
-                KillFeeds[i].KillerText[ct - 1].gameObject.SetActive(false);
-                KillFeeds[i].DeathText[ct - 1].gameObject.SetActive(false);
-                KillFeeds[i].Icon[ct - 1].SetActive(false);
+                TimeInSeconds -= Time.deltaTime;
+                return false;
             }
-            FunctionCounter--;
-        }));
-        FunctionCounter++;
-    }
-}
-
-[Serializable]
-public class KillFeed : ITimer<float>
-{
-    public float TimeInSeconds { get; set; }
-    public List<TextMeshProUGUI> KillerText = new List<TextMeshProUGUI>();
-    public List<TextMeshProUGUI> DeathText = new List<TextMeshProUGUI>();
-    public List<GameObject> Icon = new List<GameObject>();
-
-    public bool Countdown()
-    {
-        if (TimeInSeconds > 0)
-        {
-            TimeInSeconds -= Time.deltaTime;
-            return false;
+            else
+            {
+                return true;
+            }
         }
-        else
-        {
-            return true;
-        }
-    }
 
-    //This class has created in March 4th in Chocolabs with Ruby <3//
+        //This class has created in March 4th in Chocolabs with Ruby <3//
+    }
 }
 

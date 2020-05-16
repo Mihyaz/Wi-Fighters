@@ -8,7 +8,8 @@ using Zenject;
 
 public class GameManager : MonoBehaviour, ITimer<float>
 {
-    [Inject][HideInInspector]
+    [Inject]
+    [HideInInspector]
     public GameUI UI;
 
     public static GameManager Instance;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour, ITimer<float>
     public event GameEvents OnGameFinish;
     public event GameEvents OnGameStart;
 
+    public List<Player> AllPlayers;
+
     private IEnumerator _gameTimeCo;
     private IEnumerator _clientsCo;
     public float TimeInSeconds { get; set; }
@@ -24,6 +27,10 @@ public class GameManager : MonoBehaviour, ITimer<float>
     {
         if (gameObject != null)
             Instance = this;
+
+        for (int i = 0; i < 4; i++)
+            AllPlayers.Add(FindObjectsOfType<Player>()[i]);
+
         TimeInSeconds = 2 * 60; // 10 minutes
     }
 
@@ -71,7 +78,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
 
     public bool CheckIfEverbodyConnected()
     {
-        if (Server.ConnectedClient == 1)
+        if (Server.ConnectedClient == 2)
         {
             StartGame();
             UI.IPv4Viewer.CloseIPv4();
@@ -82,6 +89,6 @@ public class GameManager : MonoBehaviour, ITimer<float>
             UI.IPv4Viewer.RefreshConnectedPlayers(Server.ConnectedClient);
             return false;
         }
-            
+
     }
 }

@@ -11,7 +11,6 @@ public class PlayerUI : UI, IComposable
     public DeathDimmer DeathDimmer;
     public TextMeshProUGUI Ammo;
     public TextMeshProUGUI Score;
-    public TextMeshProUGUI KillFeed;
 
     private float _health;
     private int _currentAmmo;

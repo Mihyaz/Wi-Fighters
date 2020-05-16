@@ -4,6 +4,7 @@ using UnityEngine;
 using Zenject;
 using DG.Tweening;
 using OnurMihyaz;
+using Unity.Entities.UniversalDelegates;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour, IComposable
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour, IComposable
     public string Name { get; set; }
     #endregion
     public event CreateTriggered OnPlayerCreated;
+    public event KillFeedTriggered OnKillFeedRefreshed;
 
     [Inject] private readonly SpawnPointHandler _spawnPointHandler;
 
@@ -56,7 +58,8 @@ public class Player : MonoBehaviour, IComposable
             UI.SetUI();
             Enemy.State.Score++;
             Enemy.UI.Score.text = Enemy.State.Score.ToString();
-            GameManager.Instance.UI.RefreshKillFeed(Enemy.Name, Name);
+            for (int i = 0; i < 4; i++)
+                GameManager.Instance.AllPlayers[i].OnKillFeedRefreshed.Invoke(Enemy.Name, Name);
         };
         Event.OnPlayerRespawn += ResetThis;
         GameManager.Instance.OnGameFinish += ResetThis;

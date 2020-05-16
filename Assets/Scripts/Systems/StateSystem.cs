@@ -7,6 +7,7 @@ public class StateSystem : MonoBehaviour, IState, IStateEvent
 {
     public PlayerDelegate PlayerDelegate { get; set; }
     public CreateTriggered Create { get; set; }
+    public KillFeedTriggered KillFeedRefresh { get; set; }
     public event PlayerDelegate OnPlayerDeath;
     public event PlayerDelegate OnPlayerRespawn;
 
@@ -27,7 +28,6 @@ public class StateSystem : MonoBehaviour, IState, IStateEvent
             }
         }
     }
-
 
     private void Awake()
     {
