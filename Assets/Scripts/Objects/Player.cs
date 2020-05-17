@@ -137,13 +137,13 @@ public class Player : MonoBehaviour, IComposable
 
     private void Shoot()
     {
-        if(!Attack._isReloading)
+        if(!Attack.IsReloading)
         {
             if (Gun.Ammo <= 0 && Gun.Ammo != Gun.ClipSize)
             {
                 Component.Animator.SetBool("isReloading", true);
 
-                Attack._isReloading = true;
+                Attack.IsReloading = true;
                 return;
             }
 
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour, IComposable
         {
             Server.SendMessageToClient(Name + "+" + "Reload");
             Component.Animator.SetBool("isReloading", true);
-            Attack._isReloading = true;
+            Attack.IsReloading = true;
         }
     }
 
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour, IComposable
     {
         Component.Animator.SetBool("isReloading", false);
         UI.CurrentAmmo = Gun.ResetAmmo();
-        Attack._isReloading = false;
+        Attack.IsReloading = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

@@ -2,8 +2,8 @@
 
 public class MessageSystem : MonoBehaviour, IAttack
 {
-    public bool _isShooting { get; set; }
-    public bool _isReloading { get; set; }
+    public bool IsShooting { get; set; }
+    public bool IsReloading { get; set; }
 
     public string Shoot() => "Shoot";
 
