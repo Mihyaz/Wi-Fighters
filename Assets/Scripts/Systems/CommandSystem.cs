@@ -96,13 +96,13 @@ public class CommandSystem : MonoBehaviour, ICommand
                     gun = GunClasses.Shotgun;
                     break;
                 case "Handgun":
-                    gun = GunClasses.Shotgun;
+                    gun = GunClasses.Handgun;
                     break;
                 case "Laser":
-                    gun = GunClasses.Shotgun;
+                    gun = GunClasses.Laser;
                     break;
                 default:
-                    gun = GunClasses.Shotgun;
+                    gun = GunClasses.Rifle;
                     break;
             }
 
