@@ -28,7 +28,7 @@ public class KillFeedPanel : MonoBehaviour
                 DeathText[i].text = playerDie;
                 FeedPanels[i].SetActive(true);
 
-                StartCoroutine(MihyazDelay.Delay(5f, () =>
+                StartCoroutine(MihyazDelay.Delay(7f, () =>
                 {
                     FeedPanels[i].SetActive(false);
                 }));

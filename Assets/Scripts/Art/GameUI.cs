@@ -9,7 +9,6 @@ using System.IO.IsolatedStorage;
 
 public class GameUI : UI
 {
-    private int FunctionCounter;
 
     public List<TextMeshProUGUI> GameTime;
     public IPv4Viewer IPv4Viewer;

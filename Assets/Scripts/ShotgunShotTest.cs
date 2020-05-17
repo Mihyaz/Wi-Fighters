@@ -12,15 +12,13 @@ public class ShotgunShotTest : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
-                Bullet bullet = GameObject.Instantiate(Bullet, transform.position, transform.rotation) as Bullet;
-                bullet.transform.Rotate(bullet.transform.rotation.x, bullet.transform.rotation.y, points[i].eulerAngles.z);
-                Debug.Log(points[i].up);
-                bullet.Rigidbody.velocity = points[i].up  * 75;
-                angle += 45;
+                //Transform points = transform;
+                //points.eulerAngles = new Vector3(0, 0, -30 + (i * 15) + transform.eulerAngles.z);
+
+                
             }
-            angle = -45;
         }
     }
 }

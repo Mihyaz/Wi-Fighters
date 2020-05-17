@@ -50,7 +50,6 @@ public class Player : MonoBehaviour, IComposable
             enabled = false;
     }
 
-
     private void Start()
     {
         Event.OnPlayerDeath += () =>
@@ -73,6 +72,7 @@ public class Player : MonoBehaviour, IComposable
         Move();
         Rotate();
     }
+
     public void InvokePlayerCreated(int classIndex)
     {
         OnPlayerCreated?.Invoke(classIndex);
