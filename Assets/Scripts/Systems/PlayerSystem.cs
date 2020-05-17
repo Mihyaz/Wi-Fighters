@@ -6,7 +6,7 @@ public class PlayerSystem : MonoBehaviour
 {
     public List<ScriptStruct> monoScript = new List<ScriptStruct>();
 
-    private void Awake()
+    private void OnEnable()
     {
         for (int i = 0; i < monoScript.Count; i++)
         {

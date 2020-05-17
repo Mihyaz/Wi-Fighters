@@ -3,15 +3,14 @@ using UnityEngine;
 
 public class AllowPlayersToPlay : MonoBehaviour
 {
-    public List<Player> Players = new List<Player>();
     public void Start()
     {
         GameManager.Instance.OnGameStart += () =>
         {
             for (int i = 0; i < 4; i++)
             {
-                if(Players[i].IsConnected)
-                    Players[i].enabled = true;
+                if (GameManager.Instance.AllPlayers[i].IsConnected)
+                    GameManager.Instance.AllPlayers[i].enabled = true;
             }
         };
     }

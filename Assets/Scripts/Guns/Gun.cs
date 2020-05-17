@@ -33,14 +33,14 @@ public abstract class Gun
         NextFire = nextFire;
     }
 
-    public virtual void Fire(Bullet bullet, Transform firePointTransform)
-    {
-        ShootingType.Fire(bullet, firePointTransform);
-    }
-
     public void SetShootingAbility(IShot newShootingType)
     {
         this.ShootingType = newShootingType;
+    }
+
+    public virtual void Fire(Bullet bullet, Transform firePointTransform)
+    {
+        ShootingType.Fire(bullet, firePointTransform);
     }
 
     public virtual int ResetAmmo()
@@ -53,48 +53,4 @@ public abstract class Gun
 public interface IShot
 {
     void Fire(Bullet _bullet, Transform firePointTransform);
-}
-
-public class LinearShot : IShot
-{
-    private int _spreadCount;
-    private float _speed;
-
-    public LinearShot(int SpreadCount, float Speed)
-    {
-        _spreadCount = SpreadCount;
-        _speed = Speed;
-    }
-
-    public void Fire(Bullet _bullet, Transform firePointTransform)
-    {
-        for (int i = 0; i < _spreadCount; i++)
-        {
-            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
-            bullet.Rigidbody.velocity = firePointTransform.up * _speed;
-        }
-    }
-}
-
-public class SpreadShot : IShot
-{
-    private int _angle = -30;
-    private int _angleBetweenBullets = 15;
-    private int _spreadCount;
-    private float _speed;
-
-    public SpreadShot(int SpreadCount, float Speed)
-    {
-        _spreadCount = SpreadCount;
-        _speed = Speed;
-    }
-    public void Fire(Bullet _bullet, Transform firePointTransform)
-    {
-        for (int i = 0; i < _spreadCount; i++)
-        {
-            Bullet bullet = GameObject.Instantiate(_bullet, firePointTransform.position, firePointTransform.rotation) as Bullet;
-            bullet.transform.Rotate(bullet.transform.rotation.x, bullet.transform.rotation.y, _angle + (i * _angleBetweenBullets));
-            bullet.Rigidbody.velocity = bullet.transform.up * _speed;
-        }
-    }
 }

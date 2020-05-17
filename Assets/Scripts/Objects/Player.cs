@@ -210,7 +210,7 @@ public class Player : MonoBehaviour, IComposable
         State          = GetComponent<IState>();
         CommandManager = GetComponent<ICommand>();
         Component      = GetComponent<IComponent>();
-        Event         = GetComponent<IStateEvent>();
+        Event          = GetComponent<IStateEvent>();
     }
 
     public void ResetThis()

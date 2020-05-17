@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
     private IEnumerator _gameTimeCo;
     private IEnumerator _clientsCo;
     public float TimeInSeconds { get; set; }
+    
     private void Awake()
     {
         if (gameObject != null)
