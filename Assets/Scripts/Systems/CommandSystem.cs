@@ -86,27 +86,27 @@ public class CommandSystem : MonoBehaviour, ICommand
     {
         if(!_executables.ClassExecuted)
         {
-            int i;
+            GunClasses gun;
             switch (index)
             {
                 case "Rifle":
-                    i = 0;
+                    gun = GunClasses.Rifle;
                     break;
                 case "Shotgun":
-                    i = 1;
+                    gun = GunClasses.Shotgun;
                     break;
                 case "Handgun":
-                    i = 2;
+                    gun = GunClasses.Shotgun;
                     break;
                 case "Laser":
-                    i = 3;
+                    gun = GunClasses.Shotgun;
                     break;
                 default:
-                    i = 0;
+                    gun = GunClasses.Shotgun;
                     break;
             }
 
-            GetComponent<Player>().InvokePlayerCreated(i);
+            GetComponent<Player>().InvokePlayerCreated(gun);
            _executables.ClassExecuted = true;
         }
     }

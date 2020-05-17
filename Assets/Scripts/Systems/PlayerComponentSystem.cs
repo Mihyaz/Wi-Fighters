@@ -13,6 +13,7 @@ public class PlayerComponentSystem : MonoBehaviour, IComponent
     {
         Init();
     }
+
     public void Init()
     {
         Animator = GetComponent<Animator>();
@@ -21,6 +22,7 @@ public class PlayerComponentSystem : MonoBehaviour, IComponent
         Collider = GetComponent<CircleCollider2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
     }
+
     public void ResetThis()
     {
         SpriteRenderer.enabled = true;

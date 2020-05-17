@@ -73,9 +73,9 @@ public class Player : MonoBehaviour, IComposable
         Rotate();
     }
 
-    public void InvokePlayerCreated(int classIndex)
+    public void InvokePlayerCreated(GunClasses gunClass)
     {
-        OnPlayerCreated?.Invoke(classIndex);
+        OnPlayerCreated?.Invoke(gunClass);
     }
 
     public void PickGunClass(GunClasses choice)

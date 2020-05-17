@@ -1,5 +1,5 @@
 ﻿public delegate void PlayerDelegate();
-public delegate void CreateTriggered(int i);
+public delegate void CreateTriggered(GunClasses i);
 public delegate void KillFeedTriggered(string a, string b);
 public interface IStateEvent
 {

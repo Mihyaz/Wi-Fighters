@@ -19,11 +19,11 @@ public class ClassSelection : MonoBehaviour
         _player.OnPlayerCreated += CreatePlayer;
     }
 
-    public void CreatePlayer(int index)
+    public void CreatePlayer(GunClasses gunClass)
     {
-        _player.PickGunClass((GunClasses)index);
+        _player.PickGunClass(gunClass);
 
-        _player.Component.Animator.runtimeAnimatorController = _animatorController[index];
+        _player.Component.Animator.runtimeAnimatorController = _animatorController[(int)gunClass];
 
         gameObject.transform.parent.gameObject.SetActive(false);
     }
