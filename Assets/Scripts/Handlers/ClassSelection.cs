@@ -39,7 +39,7 @@ public class ClassSelection : MonoBehaviour
             _choiceButtons.Add(transform.GetChild(i).GetComponent<Button>());
             _choiceButtons[i].onClick.AddListener(delegate
             {
-                CreatePlayer(temp);
+                CreatePlayer((GunClasses)temp);
             });
         }
     }
