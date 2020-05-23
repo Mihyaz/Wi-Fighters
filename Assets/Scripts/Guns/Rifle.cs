@@ -1,4 +1,6 @@
-﻿public class Rifle : Gun
+﻿using System.Runtime.CompilerServices;
+
+public class Rifle : Gun
 {
     public Rifle(
     float fireRate = 0.1f,
@@ -10,6 +12,6 @@
     int spreadCount = 1) :
     base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
     {
-        ShootingType = new LinearShot(spreadCount, speed);
+        ShootingType = new LinearShot(this);
     }
 }

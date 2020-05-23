@@ -10,6 +10,6 @@
     int spreadCount = 5) :
     base(fireRate, damage, nextFire, speed, clipSize, ammo, spreadCount)
     {
-        ShootingType = new SpreadShot(spreadCount, speed);
+        ShootingType = new SpreadShot(this);
     }
 }

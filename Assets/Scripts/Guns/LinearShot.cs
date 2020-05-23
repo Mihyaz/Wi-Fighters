@@ -1,14 +1,17 @@
-﻿using UnityEngine;
+﻿using Boo.Lang;
+using System;
+using UnityEngine;
 
 public class LinearShot : IShot
 {
     private int _spreadCount;
     private float _speed;
-
-    public LinearShot(int SpreadCount, float Speed)
+    public LinearShot(Gun gun) 
     {
-        _spreadCount = SpreadCount;
-        _speed = Speed;
+        if (gun is Shotgun) throw new Exception($"Use LinearShot class to construct a {gun.GetType().Name}");
+
+        _spreadCount = gun.SpreadCount;
+        _speed = gun.Speed;
     }
 
     public void Fire(Bullet _bullet, Transform firePointTransform)

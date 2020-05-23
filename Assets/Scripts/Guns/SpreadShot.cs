@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SpreadShot : IShot
 {
@@ -7,10 +8,12 @@ public class SpreadShot : IShot
     private int _spreadCount;
     private float _speed;
 
-    public SpreadShot(int SpreadCount, float Speed)
+    public SpreadShot(Gun gun)
     {
-        _spreadCount = SpreadCount;
-        _speed = Speed;
+        if (!(gun is Shotgun)) throw new Exception($"Use LinearShot class to construct a {gun.GetType().Name}");
+        
+        _spreadCount = gun.SpreadCount;
+        _speed = gun.Speed;
     }
 
     public void Fire(Bullet _bullet, Transform firePointTransform)

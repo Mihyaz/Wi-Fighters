@@ -63,6 +63,7 @@ public class Player : MonoBehaviour, IComposable
         Event.OnPlayerRespawn += ResetThis;
         GameManager.Instance.OnGameFinish += ResetThis;
         ResetThis();
+        //Gun.SetShootingAbility(new LinearShot<Rifle>());
     }
 
     private void Update()
@@ -215,7 +216,7 @@ public class Player : MonoBehaviour, IComposable
 
     public void ResetThis()
     {
-        StartCoroutine(MihyazDelay.Delay(0.5f, () =>
+        StartCoroutine(MihyazDelay.Delay(0.1f, () =>
         {
             Gun.ResetAmmo();
             State.ResetThis();

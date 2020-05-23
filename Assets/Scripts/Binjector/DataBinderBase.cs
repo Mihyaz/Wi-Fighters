@@ -19,9 +19,6 @@ public class DataBinderBase : MonoBehaviour
 
     public float MihyazTo(MihyazGetter<float> getter, MihyazSetter<float> setter, float endValue)
     {
-        dynamic a = getter;
-        dynamic b = setter;
-
-        return b + 10;
+        return (dynamic)getter;
     }
 }
