@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour, ITimer<float>
     private IEnumerator _gameTimeCo;
     private IEnumerator _clientsCo;
     public float TimeInSeconds { get; set; }
-    
+    public int ConnectedClient;
+
+
     private void Awake()
     {
         if (gameObject != null)
@@ -33,6 +35,12 @@ public class GameManager : MonoBehaviour, ITimer<float>
             AllPlayers.Add(FindObjectsOfType<Player>()[i]);
 
         TimeInSeconds = 2 * 60; // 10 minutes
+        ConnectedClient = 4;
+    }
+
+    private void Update()
+    {
+        print(ConnectedClient);
     }
 
     private void Start()
@@ -79,7 +87,7 @@ public class GameManager : MonoBehaviour, ITimer<float>
 
     public bool CheckIfEverbodyConnected()
     {
-        if (Server.ConnectedClient == 2)
+        if (Server.ConnectedClient == ConnectedClient)
         {
             StartGame();
             UI.IPv4Viewer.CloseIPv4();

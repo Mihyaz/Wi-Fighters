@@ -1,6 +1,6 @@
 ﻿<UXML xmlns:ui="UnityEngine.UIElements" xmlns:ue="UnityEditor.UIElements">
   <ui:VisualElement name="row" class="container">
-    <ui:Label text="Tank Script - Custom Inspector" />
-    <ue:PropertyField binding-path="myScore" name="player-name-field" />
+    <Style src="player_inspector_styles.uss" />
+    <ui:Label text="Client Number Section" />
   </ui:VisualElement>
 </UXML>

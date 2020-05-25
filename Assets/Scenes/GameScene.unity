@@ -7114,11 +7114,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI: {fileID: 0}
-  AllPlayers:
-  - {fileID: 494943117}
-  - {fileID: 356935302}
-  - {fileID: 1983877078}
-  - {fileID: 59676479}
+  AllPlayers: []
+  ConnectedClient: 3
 --- !u!4 &585314145
 Transform:
   m_ObjectHideFlags: 0

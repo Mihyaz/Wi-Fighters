@@ -12,14 +12,14 @@ public class SimpleBindingExampleUXML : EditorWindow
         wnd.titleContent = new GUIContent("Simple Binding UXML");
     }
 
-    Player m_Player;
+    GameManager m_GM;
     public void OnEnable()
     {
-        m_Player = GameObject.FindObjectOfType<Player>();
-        if (m_Player == null)
+        m_GM = GameObject.FindObjectOfType<GameManager>();
+        if (m_GM == null)
             return;
 
-        var inspector = new InspectorElement(m_Player);
+        var inspector = new InspectorElement(m_GM);
         rootVisualElement.Add(inspector);
     }
 }
