@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 using DG.Tweening;
 using OnurMihyaz;
-using Unity.Entities.UniversalDelegates;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour, IComposable
