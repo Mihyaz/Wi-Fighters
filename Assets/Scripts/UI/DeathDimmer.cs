@@ -19,9 +19,11 @@ public class DeathDimmer : MonoBehaviour, ITimer<float>
         _dimmer = GetComponent<Image>();
         _icon = GetComponentsInChildren<Image>()[1];
         _timer = GetComponentInChildren<TextMeshProUGUI>();
+
         if (gameObject.activeInHierarchy)
             gameObject.SetActive(false);
     }
+
     private void OnEnable()
     {
         _dimmer.DOFade(0.45f, 0.5f);

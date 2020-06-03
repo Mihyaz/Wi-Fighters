@@ -49,12 +49,11 @@ public class Server : MonoBehaviour
     }
     private void Update()
     {
-        //if(ConnectedClient == 4)
-        Player_4.CommandManager.Executer(Player_4.Command);
-
+        
         Player_1.CommandManager.Executer(Player_1.Command);
         Player_2.CommandManager.Executer(Player_2.Command);
         Player_3.CommandManager.Executer(Player_3.Command);
+        Player_4.CommandManager.Executer(Player_4.Command);
     }
 
     private void ListenForIncommingRequests()

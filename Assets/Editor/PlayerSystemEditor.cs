@@ -8,7 +8,7 @@ using UnityEditorInternal;
 
 
 [CustomEditor(typeof(PlayerSystem)), CanEditMultipleObjects]
-public class EditorGUIPropertyField : Editor
+public class PlayerSystemEditor : Editor
 {
     SerializedProperty m_MonoProperty;
     private ReorderableList _list;
@@ -24,7 +24,7 @@ public class EditorGUIPropertyField : Editor
             var element = _list.serializedProperty.GetArrayElementAtIndex(index);
             rect.y += 2;
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, 200, EditorGUIUtility.singleLineHeight),
-                element.FindPropertyRelative("Mono"), GUIContent.none);
+                element.FindPropertyRelative("System"), GUIContent.none);
         };
         _list.drawHeaderCallback = (Rect rect) =>
         {

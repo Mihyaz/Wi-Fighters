@@ -1,7 +1,6 @@
 ﻿using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UIElements.Image;
 
@@ -16,9 +15,11 @@ public class GameEditor : EditorWindow
     {
         GetWindow<GameEditor>("Game Editor");
     }
+
     public void OnEnable()
     {
         var root = this.rootVisualElement;
+
         #region Label
         m_Label = new Label()
         {
@@ -31,7 +32,7 @@ public class GameEditor : EditorWindow
         #region Client Field
         m_IntField = new IntegerField()
         {
-            bindingPath = "ConnectedClient"
+            bindingPath = "ClientCount"
         };
         m_IntField.style.unityTextAlign = new StyleEnum<TextAnchor>(TextAnchor.MiddleCenter);
         m_IntField.style.fontSize = 20;
@@ -46,6 +47,7 @@ public class GameEditor : EditorWindow
         m_Logo.style.height = 50f;
         m_Logo.style.top = 7;
         #endregion
+
         root.Add(m_Logo);
         root.Add(m_Label);
         root.Add(m_IntField);

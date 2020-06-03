@@ -36,7 +36,7 @@ public class IPv4Viewer : IComposable
 
     public void RefreshConnectedPlayers(int connectedPlayers)
     {
-        ConnectedPlayers.text = connectedPlayers + "/" + GameManager.Instance.ConnectedClient; //TODO
+        ConnectedPlayers.text = connectedPlayers + "/" + GameManager.Instance.ClientCount; //TODO
     }
 
     public void ViewIPv4(string ipv4)

@@ -4,6 +4,6 @@ using UnityEditor;
 [Serializable]
 public struct ScriptStruct
 {
-    public MonoScript Mono;
+    public MonoScript System;
 }
 #endif

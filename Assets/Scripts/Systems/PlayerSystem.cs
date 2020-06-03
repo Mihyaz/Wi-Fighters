@@ -10,7 +10,7 @@ public class PlayerSystem : MonoBehaviour
     {
         for (int i = 0; i < monoScript.Count; i++)
         {
-            gameObject.AddComponent(monoScript[i].Mono.GetClass());
+            gameObject.AddComponent(monoScript[i].System.GetClass());
         }
     }
 }
