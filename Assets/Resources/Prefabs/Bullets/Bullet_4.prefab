@@ -121,6 +121,7 @@ MonoBehaviour:
   Rigidbody: {fileID: 6678955272557128461}
   Damage: 5
   Player: {fileID: 0}
+  SpriteRenderer: {fileID: 202096214755094350}
 --- !u!96 &2695152866886919464
 TrailRenderer:
   serializedVersion: 2

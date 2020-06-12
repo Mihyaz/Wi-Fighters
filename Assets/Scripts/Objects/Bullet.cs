@@ -9,6 +9,8 @@ public class Bullet : MonoBehaviour
 
     public float Damage;
     public Player Player;
+    public SpriteRenderer SpriteRenderer;
+    public TrailRenderer Trail;
     void Awake()
     {
         _transform = transform;
@@ -18,5 +20,11 @@ public class Bullet : MonoBehaviour
     {
         Damage = damage;
         Player = player;
+
+        if (Player.Gun is Laser)
+        {
+            Trail.startColor = Color.red;
+            Trail.endColor   = Color.red;
+        }
     }
 }

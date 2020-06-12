@@ -15,6 +15,7 @@ public class ClassSelection : MonoBehaviour
         _animatorController.Add(Resources.Load("Controllers/Rifle")   as RuntimeAnimatorController);
         _animatorController.Add(Resources.Load("Controllers/Shotgun") as RuntimeAnimatorController);
         _animatorController.Add(Resources.Load("Controllers/Handgun") as RuntimeAnimatorController);
+        _animatorController.Add(Resources.Load("Controllers/Laser")   as RuntimeAnimatorController);
 
         _player.OnPlayerCreated += CreatePlayer;
     }
