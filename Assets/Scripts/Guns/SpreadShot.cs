@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class SpreadShot : IShot
 {
-    private int _angle = -30;
-    private int _angleBetweenBullets = 15;
+    private int _angle = -15;
+    private int _angleBetweenBullets = 6;
     private int _spreadCount;
     private float _speed;
 

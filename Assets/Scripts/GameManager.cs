@@ -31,9 +31,6 @@ public class GameManager : MonoBehaviour, ITimer<float>
         if (gameObject != null)
             Instance = this;
 
-        for (int i = 0; i < 4; i++)
-            AllPlayers.Add(FindObjectsOfType<Player>()[i]);
-
         TimeInSeconds = 2 * 60; // 10 minutes
         ClientCount = 4;
     }
@@ -42,22 +39,31 @@ public class GameManager : MonoBehaviour, ITimer<float>
     private void Start()
     {
         _gameTimeCo = MihyazDelay.WaitUntilThis(Countdown);
-        _clientsCo = MihyazDelay.WaitUntilThis(CheckIfEverbodyConnected);
+        _clientsCo  = MihyazDelay.WaitUntilThis(CheckIfEverbodyConnected);
+
         StartCoroutine(_clientsCo);
+
         UI.IPv4Viewer.ViewIPv4(Server.GetIPv4Adress());
         UI.IPv4Viewer.StartGlowEyes();
+
         OnGameStart += () =>
         {
             StartCoroutine(_gameTimeCo);
             StopCoroutine(_clientsCo);
         };
-        OnGameFinish += () => StopCoroutine(_gameTimeCo);
+        OnGameFinish += () => 
+        {
+            StopCoroutine(_gameTimeCo);
+            for (int i = 0; i < 4; i++)
+                AllPlayers[i].enabled = false;
+        };
     }
 
     public void FinishGame()
     {
         OnGameFinish();
     }
+
     public void StartGame()
     {
         OnGameStart();
